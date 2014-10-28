@@ -24,7 +24,6 @@ type Grid = [[Marking]]
 emptyGrid :: Grid
 emptyGrid = replicate n (replicate n Nothing)
 
-
 data Game = Game {
     board :: Grid,
     curTurn :: Player
@@ -39,22 +38,18 @@ initGame = Game {
 }
 
 
--- A list of winning moves.
-winningMoves :: Grid -> [[Marking]]
-winningMoves grid = horizontal ++ vertical ++ [fDiagonal, bDiagonal]
-    where horizontal = grid
-          vertical = transpose grid
-          fDiagonal = zipWith (!!) grid [0..]
-          bDiagonal = zipWith (\ i x -> i !! (n - x - 1)) grid [0..]
-
-
 -- Check if a game has been won on a board.
 isWin :: Game -> Maybe Player
 isWin (Game grid _) | isWin' X  = Just X
                     | isWin' O  = Just O
                     | otherwise = Nothing
-    where isWin' :: Player -> Bool
-          isWin' player = any (all (== Just player)) $ winningMoves grid
+    where horizontal = grid
+          vertical = transpose grid
+          fDiag = zipWith (\ i x -> i !! (n - x - 1)) grid [0..]
+          bDiag = zipWith (!!) grid [0..]
+          possibleWinMoves = horizontal ++ vertical ++ [fDiag, bDiag]
+          isWin' :: Player -> Bool
+          isWin' player = any (all (== Just player)) possibleWinMoves
 
 -- Make the next move.
 move :: Game -> Position -> Game
