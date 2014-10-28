@@ -1,0 +1,83 @@
+\documentclass[a4paper]{article}
+
+\usepackage[english]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage[]{algorithm2e}
+
+\title{W2: Tic-Tac-Toe}
+
+\author{Benjamin Tan & Wei En}
+
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\section{Introduction}
+
+Tic-Tac-Toe is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3 x 3 grid. The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.
+
+\section{Function API}
+
+We need to create an \emph{Application Programming Interface} for our code. The \emph{Application Programming Interface} is the interface of our functions that the code of our user interface will call. Without a proper interface, our user interface will not work properly.
+
+We define the following objects:
+
+\begin{description}
+  \item[Grid] Stores a grid of markings.
+  \item[Game] Contains the state of the game.
+\end{description}
+
+
+\subsection{Grid}
+
+The Grid object is a two-dimensional array of markings.
+
+Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
+
+
+\subsection{Game}
+
+The Game object contains the following properties and functions:
+
+\begin{description}
+  \item[Game] constructor for the Game object.
+
+  \item[grid] Instance of a Grid object.
+  \item[curTurn] Current turn.
+
+  \item[isWin()] Check if any player has won.
+  \item[move(pos)] Make the next move.
+\end{description}
+
+\subsection{Game}
+
+This function is a special function which creates a new object.
+
+\subsubsection{grid}
+
+grid is an instance of a Grid object.
+
+\subsubsection{curTurn}
+
+curTurn marks the current turn for the player. Its value can be either 'X' or 'O'. The first player to go is 'X'.
+
+\subsubsection{isWin()}
+
+isWin checks if the player has already won. We use the following logic to find out if the player has already won:
+
+\begin{algorithm}
+\uIf{isWin'(O)}{
+  \Return O
+}
+\uElseIf{isWin'(X)}{
+  \Return X
+}
+\Else{
+  \Return null
+}
+\end{algorithm}
+
+\end{document}
