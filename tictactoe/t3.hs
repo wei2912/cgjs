@@ -1,7 +1,7 @@
 -- Tic Tac Toe implementation in Haskell.
 
 module TicTacToe (
-    initGame,
+    newGame,
     isWin,
     move
 ) where
@@ -22,7 +22,7 @@ type Grid = [[Marking]]
 
 -- An empty grid of size n x n.
 emptyGrid :: Grid
-emptyGrid = replicate n (replicate n Nothing)
+emptyGrid = replicate n $ replicate n Nothing
 
 data Game = Game {
     board :: Grid,
@@ -31,25 +31,27 @@ data Game = Game {
 
 -- Initial game which board is of size n x n,
 -- starting with O as the first player.
-initGame :: Game
-initGame = Game {
+newGame :: Game
+newGame = Game {
     board = emptyGrid,
     curTurn = X
 }
 
+
+getWinSeqs :: Grid -> [[Marking]]
+getWinSeqs grid = horizontal ++ vertical ++ [fDiag, bDiag]
+  where horizontal = grid
+        vertical = transpose grid
+        fDiag = zipWith (\ i x -> i !! (n - x - 1)) grid [0..]
+        bDiag = zipWith (!!) grid [0..]
 
 -- Check if a game has been won on a board.
 isWin :: Game -> Maybe Player
 isWin (Game grid _) | isWin' X  = Just X
                     | isWin' O  = Just O
                     | otherwise = Nothing
-    where horizontal = grid
-          vertical = transpose grid
-          fDiag = zipWith (\ i x -> i !! (n - x - 1)) grid [0..]
-          bDiag = zipWith (!!) grid [0..]
-          possibleWinMoves = horizontal ++ vertical ++ [fDiag, bDiag]
-          isWin' :: Player -> Bool
-          isWin' player = any (all (== Just player)) possibleWinMoves
+    where isWin' :: Player -> Bool
+          isWin' player = any (all (== Just player)) $ getWinSeqs grid
 
 -- Make the next move.
 move :: Game -> Position -> Game
