@@ -43,7 +43,7 @@ The `Game' object contains the following properties and functions:
   \item[move()] Make the next move.
 \end{description}
 
-\subsection{Game()}
+\subsubsection{Game()}
 
 `Game()' is the constructor of the Game object.
 
@@ -120,12 +120,12 @@ The moment we find a winning sequence, we return the player that has won. Otherw
 
 If we don't find any winning sequence, we return null.
 
-In order to get the winning sequences, we detail out the following algorithm:
+In order to get the possible winning sequences, we detail out the following algorithm:
 
 \begin{algorithm}
-\caption{Obtain the number of winning sequences.}
+\caption{Obtain the possible winning sequences.}
 
-\begin{algorithmic}[2]
+\begin{algorithmic}[1]
 \Procedure{getWinSeqs}{$game$}
 \State $rows \gets game.grid$
 \For{$i \gets 0, \Call{length}{game.grid}$}
@@ -166,7 +166,7 @@ Through the for loop, we get a list of winning sequences as columns of the grid.
 
 Thirdly, we set `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array, which we obtain by the code as shown in the algorithm.
 
-Finally, we return the winning sequences.
+Finally, we return the possible winning sequences.
 
 \subsubsection{move()}
 
