@@ -1,15 +1,15 @@
-\documentclass[a4paper]{article}
+\documentclass{article}
 
-\usepackage[english]{babel}
-\usepackage[utf8]{inputenc}
 \usepackage{amsmath}
-\usepackage{graphicx}
-\usepackage[]{algorithm2e}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
 
-\title{W2: Tic-Tac-Toe}
+\newcommand{\var}[1]{\mathit{#1}}
+\newcommand{\qt}[1]{\mbox{`#1'}}
+\algrenewcommand{\algorithmicreturn}{\State \textbf{return}}
 
-\author{Benjamin Tan & Wei En}
-
+\title{Week 2: Tic-Tac-Toe}
+\author{Benjamin Tan and Ng Wei En}
 \date{\today}
 
 \begin{document}
@@ -19,65 +19,172 @@
 
 Tic-Tac-Toe is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3 x 3 grid. The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.
 
-\section{Function API}
+In this document, we detail out the API of your Tic Tac Toe implementation in what is known as `psuedocode'.
 
-We need to create an \emph{Application Programming Interface} for our code. The \emph{Application Programming Interface} is the interface of our functions that the code of our user interface will call. Without a proper interface, our user interface will not work properly.
+\section{API}
 
 We define the following objects:
 
 \begin{description}
-  \item[Grid] Stores a grid of markings.
   \item[Game] Contains the state of the game.
 \end{description}
 
-
-\subsection{Grid}
-
-The Grid object is a two-dimensional array of markings.
-
-Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
-
-
 \subsection{Game}
 
-The Game object contains the following properties and functions:
+The `Game' object contains the following properties and functions:
 
 \begin{description}
-  \item[Game] constructor for the Game object.
+  \item[Game()] constructor for the Game object.
 
   \item[grid] Instance of a Grid object.
   \item[curTurn] Current turn.
 
   \item[isWin()] Check if any player has won.
-  \item[move(pos)] Make the next move.
+  \item[move()] Make the next move.
 \end{description}
 
-\subsection{Game}
+\subsection{Game()}
 
-This function is a special function which creates a new object.
+`Game()' is the constructor of the Game object.
 
 \subsubsection{grid}
 
-grid is an instance of a Grid object.
+`grid` is a 3 x 3 array of markings.
+
+Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
 
 \subsubsection{curTurn}
 
-curTurn marks the current turn for the player. Its value can be either 'X' or 'O'. The first player to go is 'X'.
+`curTurn' stores the current turn for the player. Its value can be either `X' or `O'. The first player to go is `X'.
 
 \subsubsection{isWin()}
 
-isWin checks if the player has already won. We use the following logic to find out if the player has already won:
+`isWin()' checks if the player has already won. We use the following logic to find out if the player has already won:
 
 \begin{algorithm}
-\uIf{isWin'(O)}{
-  \Return O
-}
-\uElseIf{isWin'(X)}{
-  \Return X
-}
-\Else{
-  \Return null
-}
+\caption{Check if any player has won.}
+
+\begin{algorithmic}[1]
+\Procedure{isWin}{$game$}
+\ForAll{$seq \in \Call{getWinSeqs}{game}$}
+  \For{$i \gets 0, \Call{length}{seq} - 1$}
+    \If{$\lnot seq[i] = seq[i + 1]$}
+      $break$
+    \EndIf
+  \EndFor
+  \If{$seq[i + 1] = \qt{X}$}
+    \Return $\qt{O}$
+  \ElsIf{$seq[i + 1] = \qt{O}$}
+    \Return $\qt{X}$
+  \EndIf
+\EndFor
+\Return $null$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+The first part of our algorithm obtains all sequences of markings which, if equal to either `X' or `O', constitutes as a win for that player. Given the following grid:
+
+\begin{verbatim}
+X O X
+O X O
+X _ _
+\end{verbatim}
+
+We should obtain the following sequences of markings:
+
+\begin{verbatim}
+// Rows
+X O X
+O X O
+X _ _
+
+// Columns
+X O X
+O X _
+X O _
+
+// Forward Diagonal
+X X X
+// Backward Diagonal
+X X _
+\end{verbatim}
+
+The forward diagonal is comprised of only `X'. Hence, we can conclude that the player `X' has won.
+
+We iterate through all these sequences which the function `getWinSeqs' has generated.
+
+For each sequence, we check if every element in the sequence is equal to each other and equal to either `X' or `O'. If so, we return the corresponding players.
+
+The moment we find a winning sequence, we return the player that has won. Otherwise, we continue looking through the list of sequences.
+
+If we don't find any winning sequence, we return null.
+
+In order to get the winning sequences, we detail out the following algorithm:
+
+\begin{algorithm}
+\caption{Obtain the number of winning sequences.}
+
+\begin{algorithmic}[2]
+\Procedure{getWinSeqs}{$game$}
+\State $rows \gets game.grid$
+\For{$i \gets 0, \Call{length}{game.grid}$}
+  \For{$j \gets 0, \Call{length}{game.grid}$}
+    \State $cols[i][j] \gets game.grid[j][i]$
+  \EndFor
+\EndFor
+\For{$i \gets 0, \Call{length}{game.grid}$}
+  \State $fDiag[i] \gets game.grid[i][\Call{length}{game.grid} - i - 1]$
+\EndFor
+\For{$i \gets 0, \Call{length}{game.grid}$}
+  \State $bDiag[i] \gets game.grid[i][i]$
+\EndFor
+\Return $rows + cols + [fDiag, bDiag]$
+\EndProcedure
+\end{algorithmic}
+\end{algorithm}
+
+Firstly, we set `rows' to the grid itself. This is because the grid itself is defined as a set of rows in order.
+
+Secondly, we set `cols' to the transposition of `Game.grid'. The following grid:
+
+\begin{verbatim}
+O O _
+X _ X
+O _ X
+\end{verbatim}
+
+becomes:
+
+\begin{verbatim}
+O X O
+O _ _
+_ X X
+\end{verbatim}
+
+Through the for loop, we get a list of winning sequences as columns of the grid.
+
+Thirdly, we set `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array, which we obtain by the code as shown in the algorithm.
+
+Finally, we return the winning sequences.
+
+\subsubsection{move()}
+
+`move()' takes in a position and makes the next move. This algorithm is very trivial to write:
+
+\begin{algorithm}
+\caption{Make a move on the game board.}
+
+\begin{algorithmic}[1]
+\Procedure{move}{$game$, $(i, j)$}
+\State $game.grid[i][j] \gets game.curTurn$
+\If{$game.curTurn = `X'$}
+  \State $game.curTurn = `O'$
+\ElsIf{$game.curTurn = `O'$}
+  \State $game.curTurn = `X'$
+\EndIf
+\EndProcedure
+\end{algorithmic}
 \end{algorithm}
 
 \end{document}
