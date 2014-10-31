@@ -49,9 +49,23 @@ The `Game' object contains the following properties and functions:
 
 \subsubsection{grid}
 
-`grid` is a 3 x 3 array of markings.
+`grid` is a 3 x 3 array of markings. Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
 
-Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
+For a game board of:
+
+\begin{verbatim}
+O O X
+_ O _
+X X X
+\end{verbatim}
+
+where `_' represents an empty square, the board is represented as the following array:
+
+\begin{verbatim}
+[[`O', `O', `X'],
+ [null, `O', null],
+ [`X', `X', `X']]
+\end{verbatim}
 
 \subsubsection{curTurn}
 
