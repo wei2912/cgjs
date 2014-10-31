@@ -59,7 +59,7 @@ _ O _
 X X X
 \end{verbatim}
 
-where `_' represents an empty square, the board is represented as the following array:
+where `\_' represents an empty square, the board is represented as the following array:
 
 \begin{verbatim}
 [[`O', `O', `X'],
@@ -79,20 +79,20 @@ where `_' represents an empty square, the board is represented as the following 
 \caption{Check if any player has won.}
 
 \begin{algorithmic}[1]
-\Procedure{isWin}{$game$}
-\ForAll{$seq \in \Call{getWinSeqs}{game}$}
-  \For{$i \gets 0, \Call{length}{seq} - 1$}
-    \If{$\lnot seq[i] = seq[i + 1]$}
-      $break$
+\Procedure{isWin}{}
+  \ForAll{$seq \in this.\Call{getWinSeqs}{}$}
+    \For{$i \gets 0, \Call{length}{seq} - 1$}
+      \If{$\lnot seq[i] = seq[i + 1]$}
+        $break$
+      \EndIf
+    \EndFor
+    \If{$seq[0] = \qt{X}$}
+      \Return $\qt{X}$
+    \ElsIf{$seq[0] = \qt{O}$}
+      \Return $\qt{O}$
     \EndIf
   \EndFor
-  \If{$seq[i + 1] = \qt{X}$}
-    \Return $\qt{O}$
-  \ElsIf{$seq[i + 1] = \qt{O}$}
-    \Return $\qt{X}$
-  \EndIf
-\EndFor
-\Return $null$
+  \Return $null$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -140,20 +140,20 @@ In order to get the possible winning sequences, we detail out the following algo
 \caption{Obtain the possible winning sequences.}
 
 \begin{algorithmic}[1]
-\Procedure{getWinSeqs}{$game$}
-\State $rows \gets game.grid$
-\For{$i \gets 0, \Call{length}{game.grid}$}
-  \For{$j \gets 0, \Call{length}{game.grid}$}
-    \State $cols[i][j] \gets game.grid[j][i]$
+\Procedure{getWinSeqs}{}
+  \State $rows \gets this.grid$
+  \For{$i \gets 0, \Call{length}{this.grid}$}
+    \For{$j \gets 0, \Call{length}{this.grid}$}
+      \State $cols[i][j] \gets this.grid[j][i]$
+    \EndFor
   \EndFor
-\EndFor
-\For{$i \gets 0, \Call{length}{game.grid}$}
-  \State $fDiag[i] \gets game.grid[i][\Call{length}{game.grid} - i - 1]$
-\EndFor
-\For{$i \gets 0, \Call{length}{game.grid}$}
-  \State $bDiag[i] \gets game.grid[i][i]$
-\EndFor
-\Return $rows + cols + [fDiag, bDiag]$
+  \For{$i \gets 0, \Call{length}{this.grid}$}
+    \State $fDiag[i] \gets this.grid[i][\Call{length}{this.grid} - i - 1]$
+  \EndFor
+  \For{$i \gets 0, \Call{length}{this.grid}$}
+    \State $bDiag[i] \gets this.grid[i][i]$
+  \EndFor
+  \Return $rows + cols + [fDiag, bDiag]$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
@@ -190,13 +190,23 @@ Finally, we return the possible winning sequences.
 \caption{Make a move on the game board.}
 
 \begin{algorithmic}[1]
-\Procedure{move}{$game$, $(i, j)$}
-\State $game.grid[i][j] \gets game.curTurn$
-\If{$game.curTurn = `X'$}
-  \State $game.curTurn = `O'$
-\ElsIf{$game.curTurn = `O'$}
-  \State $game.curTurn = `X'$
-\EndIf
+\Procedure{move}{$(i, j)$}
+  \If{$i < 0 \lor i \geq \Call{length}{this.grid}$}
+    \Return $null$
+  \ElsIf{$j < 0 \lor j \geq \Call{length}{this.grid}$}
+    \Return $null$
+  \ElsIf{$\lnot this.grid[i][j] = null$}
+    \Return $null$
+  \EndIf
+
+  \State $turn \gets this.curTurn$
+  \State $this.grid[i][j] \gets turn$
+  \If{$turn = `X'$}
+    \State $this.curTurn \gets `O'$
+  \ElsIf{$turn = `O'$}
+    \State $this.curTurn \gets `X'$
+  \EndIf
+  \Return $turn$
 \EndProcedure
 \end{algorithmic}
 \end{algorithm}
