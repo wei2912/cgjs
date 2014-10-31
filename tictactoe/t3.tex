@@ -80,7 +80,7 @@ where `\_' represents an empty square, the board is represented as the following
 
 \begin{algorithmic}[1]
 \Procedure{isWin}{}
-  \ForAll{$seq \in this.\Call{getWinSeqs}{}$}
+  \ForAll{$seq \in this.\Call{getPosWinSeqs}{}$}
     \For{$i \gets 0, \Call{length}{seq} - 1$}
       \If{$\lnot seq[i] = seq[i + 1]$}
         $break$
@@ -126,7 +126,7 @@ X X _
 
 The forward diagonal is comprised of only `X'. Hence, we can conclude that the player `X' has won.
 
-We iterate through all these sequences which the function `getWinSeqs' has generated.
+We iterate through all these sequences which the function `getPosWinSeqs' has generated.
 
 For each sequence, we check if every element in the sequence is equal to each other and equal to either `X' or `O'. If so, we return the corresponding players.
 
@@ -140,7 +140,7 @@ In order to get the possible winning sequences, we detail out the following algo
 \caption{Obtain the possible winning sequences.}
 
 \begin{algorithmic}[1]
-\Procedure{getWinSeqs}{}
+\Procedure{getPosWinSeqs}{}
   \State $rows \gets this.grid$
   \For{$i \gets 0, \Call{length}{this.grid}$}
     \For{$j \gets 0, \Call{length}{this.grid}$}
