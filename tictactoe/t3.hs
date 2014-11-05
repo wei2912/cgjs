@@ -37,7 +37,6 @@ newGame = Game {
     curTurn = X
 }
 
-
 getWinSeqs :: Grid -> [[Marking]]
 getWinSeqs grid = horizontal ++ vertical ++ [fDiag, bDiag]
   where horizontal = grid
@@ -47,19 +46,24 @@ getWinSeqs grid = horizontal ++ vertical ++ [fDiag, bDiag]
 
 -- Check if a game has been won on a board.
 isWin :: Game -> Maybe Player
-isWin (Game grid _) | isWin' X  = Just X
-                    | isWin' O  = Just O
-                    | otherwise = Nothing
-    where isWin' :: Player -> Bool
-          isWin' player = any (all (== Just player)) $ getWinSeqs grid
+isWin (Game grid _)
+    | isWin' X  = Just X
+    | isWin' O  = Just O
+    | otherwise = Nothing
+    where
+        isWin' :: Player -> Bool
+        isWin' player = any (all (== Just player)) $ getWinSeqs grid
 
 -- Make the next move.
 move :: Game -> Position -> Game
 move (Game grid player) (i, j) = Game {
     board = nextGrid,
     curTurn = nextPlayer
-} where nextGrid = if isNothing $ grid !! i !! j
-                   then set (ix i . ix j) (Just player) grid
-                   else error "position is occupied"
-        nextPlayer | player == X = O
-                   | otherwise   = X
+} where
+    nextGrid =
+        if isNothing $ grid !! i !! j
+        then set (ix i . ix j) (Just player) grid
+        else error "position is occupied"
+    nextPlayer
+        | player == X = O
+        | otherwise   = X

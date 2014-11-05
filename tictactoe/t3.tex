@@ -19,22 +19,22 @@
 
 Tic-Tac-Toe is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3 x 3 grid. The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.
 
-In this document, we detail out the API of your Tic Tac Toe implementation in what is known as `psuedocode'.
+In this document, we detail out the API of a Tic Tac Toe implementation.
 
 \section{API}
 
 We define the following objects:
 
 \begin{description}
-  \item[Game] Contains the state of the game.
+  \item[TicTacToe] Contains the state of the Tic Tac Toe game.
 \end{description}
 
 \subsection{Game}
 
-The `Game' object contains the following properties and functions:
+The `TicTacToe' object contains the following properties and functions:
 
 \begin{description}
-  \item[Game()] constructor for the Game object.
+  \item[TicTacToe()] constructor for the Tic Tac Toe object.
 
   \item[grid] Instance of a Grid object.
   \item[curTurn] Current turn.
@@ -43,13 +43,13 @@ The `Game' object contains the following properties and functions:
   \item[move()] Make the next move.
 \end{description}
 
-\subsubsection{Game()}
+\subsubsection{TicTacToe()}
 
-`Game()' is the constructor of the Game object.
+`TicTacToe()' is the constructor of the TicTacToe object. It initializes `grid' and `curTurn'.
 
 \subsubsection{grid}
 
-`grid` is a 3 x 3 array of markings. Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
+`grid' is a 3 x 3 array of markings. Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
 
 For a game board of:
 
@@ -59,7 +59,7 @@ _ O _
 X X X
 \end{verbatim}
 
-where `\_' represents an empty square, the board is represented as the following array:
+where `\_' represents an empty square and `O' and `X' represent their respective players, the board is represented as the following array:
 
 \begin{verbatim}
 [[`O', `O', `X'],
@@ -73,7 +73,7 @@ where `\_' represents an empty square, the board is represented as the following
 
 \subsubsection{isWin()}
 
-`isWin()' checks if the player has already won. We use the following logic to find out if the player has already won:
+`isWin()' checks if the player has already won. The following logic is used to find out if the player has already won:
 
 \begin{algorithm}
 \caption{Check if any player has won.}
@@ -105,7 +105,7 @@ O X O
 X _ _
 \end{verbatim}
 
-We should obtain the following sequences of markings:
+The following sequences of markings should be obtained:
 
 \begin{verbatim}
 // Rows
@@ -124,15 +124,15 @@ X X X
 X X _
 \end{verbatim}
 
-The forward diagonal is comprised of only `X'. Hence, we can conclude that the player `X' has won.
+The forward diagonal is comprised of only `X'. Hence, it can be concluded that the player `X' has won.
 
 We iterate through all these sequences which the function `getPosWinSeqs' has generated.
 
-For each sequence, we check if every element in the sequence is equal to each other and equal to either `X' or `O'. If so, we return the corresponding players.
+For each sequence, if every element in the sequence is equal to each other and equal to either `X' or `O', we return the corresponding players.
 
-The moment we find a winning sequence, we return the player that has won. Otherwise, we continue looking through the list of sequences.
+The moment a winning sequence is found, the player that has won is returned. Otherwise, the function continues to look through the list of sequences.
 
-If we don't find any winning sequence, we return null.
+If no winning sequence is found, the function returns null, which indicates that the game has not finished.
 
 In order to get the possible winning sequences, we detail out the following algorithm:
 
@@ -158,9 +158,9 @@ In order to get the possible winning sequences, we detail out the following algo
 \end{algorithmic}
 \end{algorithm}
 
-Firstly, we set `rows' to the grid itself. This is because the grid itself is defined as a set of rows in order.
+Firstly, the function sets `rows' to the grid itself. This is because the grid itself is defined as a set of rows in order.
 
-Secondly, we set `cols' to the transposition of `Game.grid'. The following grid:
+Secondly, the function sets `cols' to the transposition of `this.grid'. The following grid:
 
 \begin{verbatim}
 O O _
@@ -176,11 +176,9 @@ O _ _
 _ X X
 \end{verbatim}
 
-Through the for loop, we get a list of winning sequences as columns of the grid.
+Thirdly, the function sets `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array.
 
-Thirdly, we set `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array, which we obtain by the code as shown in the algorithm.
-
-Finally, we return the possible winning sequences.
+Finally, the possible winning sequences are collated and returned as a two-dimensional array.
 
 \subsubsection{move()}
 
