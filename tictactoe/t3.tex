@@ -34,7 +34,7 @@ We define the following objects:
 The `TicTacToe' object contains the following properties and functions:
 
 \begin{description}
-  \item[TicTacToe()] constructor for the Tic Tac Toe object.
+  \item[TicTacToe()] Constructor for the Tic Tac Toe object.
 
   \item[grid] Instance of a Grid object.
   \item[curTurn] Current turn.
@@ -67,9 +67,11 @@ where `\_' represents an empty square and `O' and `X' represent their respective
  [`X', `X', `X']]
 \end{verbatim}
 
+`grid' is initialized to a 3 x 3 array of nulls.
+
 \subsubsection{curTurn}
 
-`curTurn' stores the current turn for the player. Its value can be either `X' or `O'. The first player to go is `X'.
+`curTurn' stores the current turn for the player. Its value can be either `X' or `O'. The first player to go is `X'. Hence, `curTurn' is initialized to `X'.
 
 \subsubsection{isWin()}
 
