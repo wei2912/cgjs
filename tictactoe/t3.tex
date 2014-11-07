@@ -19,37 +19,9 @@
 
 Tic-Tac-Toe is a paper-and-pencil game for two players, X and O, who take turns marking the spaces in a 3 x 3 grid. The player who succeeds in placing three respective marks in a horizontal, vertical, or diagonal row wins the game.
 
-In this document, we detail out the API of a Tic Tac Toe implementation.
+\section{Representing a game board}
 
-\section{API}
-
-We define the following objects:
-
-\begin{description}
-  \item[TicTacToe] Contains the state of the Tic Tac Toe game.
-\end{description}
-
-\subsection{Game}
-
-The `TicTacToe' object contains the following properties and functions:
-
-\begin{description}
-  \item[TicTacToe()] Constructor for the Tic Tac Toe object.
-
-  \item[grid] Instance of a Grid object.
-  \item[curTurn] Current turn.
-
-  \item[isWin()] Check if any player has won.
-  \item[move()] Make the next move.
-\end{description}
-
-\subsubsection{TicTacToe()}
-
-`TicTacToe()' is the constructor of the TicTacToe object. It initializes `grid' and `curTurn'.
-
-\subsubsection{grid}
-
-`grid' is a 3 x 3 array of markings. Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
+A 3 x 3 array of markings is used. Markings can be either `X', `O' or null, the last one indicating that no marking has been placed.
 
 For a game board of:
 
@@ -67,15 +39,9 @@ where `\_' represents an empty square and `O' and `X' represent their respective
  [`X', `X', `X']]
 \end{verbatim}
 
-`grid' is initialized to a 3 x 3 array of nulls.
+\section{Checking for a win}
 
-\subsubsection{curTurn}
-
-`curTurn' stores the current turn for the player. Its value can be either `X' or `O'. The first player to go is `X'. Hence, `curTurn' is initialized to `X'.
-
-\subsubsection{isWin()}
-
-`isWin()' checks if the player has already won. The following logic is used to find out if the player has already won:
+The following logic is used to find out if a player has already won:
 
 \begin{algorithm}
 \caption{Check if any player has won.}
@@ -181,34 +147,5 @@ _ X X
 Thirdly, the function sets `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array.
 
 Finally, the possible winning sequences are collated and returned as a two-dimensional array.
-
-\subsubsection{move()}
-
-`move()' takes in a position and makes the next move. This algorithm is very trivial to write:
-
-\begin{algorithm}
-\caption{Make a move on the game board.}
-
-\begin{algorithmic}[1]
-\Procedure{move}{$(i, j)$}
-  \If{$i < 0 \lor i \geq \Call{length}{this.grid}$}
-    \Return $null$
-  \ElsIf{$j < 0 \lor j \geq \Call{length}{this.grid}$}
-    \Return $null$
-  \ElsIf{$\lnot this.grid[i][j] = null$}
-    \Return $null$
-  \EndIf
-
-  \State $turn \gets this.curTurn$
-  \State $this.grid[i][j] \gets turn$
-  \If{$turn = `X'$}
-    \State $this.curTurn \gets `O'$
-  \ElsIf{$turn = `O'$}
-    \State $this.curTurn \gets `X'$
-  \EndIf
-  \Return $turn$
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
 
 \end{document}
