@@ -6,6 +6,7 @@
 
 \usepackage{mathtools}
 \DeclarePairedDelimiter{\floor}{\lfloor}{\rfloor}
+\DeclarePairedDelimiter{\ceil}{\lceil}{\rceil}
 
 \newcommand{\var}[1]{\mathit{#1}}
 \newcommand{\qt}[1]{\mbox{`#1'}}
@@ -24,24 +25,24 @@ Guess the Number is a game where the player gives a guess to a number chosen by 
 
 \section{Random Number Generation}
 
-`genNum()' is a function which returns a randomly generated number within the range [1, 100].
+`genNum()' is a function which returns a randomly generated number within the range $[1, 100]$.
 
-\begin{algorithm}
-\caption{Generate a random number within the range [1, 100].}
+$$\ceil{\Call{random}{} * 100}$$
 
-\begin{algorithmic}[1]
-\Procedure{genNum}{}
-  \Return $\ceil{\Call{random}{} * 100}$
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
+The function `random' generates a random number within the range $[0, 1)$. Multiplying this by 100 expands the range to $[0, 100)$.
 
-The function `random' generates a random number within the range [0, 1). Multiplying this by 100 expands the range to [0, 100).
+The floor function, as denoted by:
 
-The floor function, as denoted by $\floor{x}$, returns the largest integer that is smaller than $x$. Numbers such as 4.32 will be rounded down to 4.
+$$\floor{x}$$
 
-On the other hand, the ceiling function, as denoted by $\ceil{x}$, returns the smallest integer that is larger than $x$. Numbers such as 2.62 will be rounded up to 3.
+returns the largest integer that is smaller than $x$. Numbers such as 4.32 will be rounded down to 4.
 
-This brings our range to [1, 100], which is our desired range.
+On the other hand, the ceiling function, as denoted by:
+
+$$\ceil{x}$$
+
+returns the smallest integer that is larger than $x$. Numbers such as 2.62 will be rounded up to 3.
+
+This brings our range to $[1, 100]$, which is our desired range.
 
 \end{document}
