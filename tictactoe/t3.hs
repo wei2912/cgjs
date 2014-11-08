@@ -3,12 +3,14 @@
 module TicTacToe (
     newGame,
     isWin,
-    move
+    move,
+    moves,
+    nextPlayer
 ) where
 
-import Control.Lens
-import Data.List
-import Data.Maybe
+import Control.Lens (set, ix)
+import Data.List (transpose)
+import Data.Maybe (catMaybes)
 
 -- Size of the grid
 n :: Int
@@ -16,11 +18,9 @@ n = 3
 
 data Player = X | O deriving (Show, Read, Eq)
 type Marking = Maybe Player
-type Position = (Int, Int)
 
 type Grid = [[Marking]]
 
--- An empty grid of size n x n.
 emptyGrid :: Grid
 emptyGrid = replicate n $ replicate n Nothing
 
@@ -29,24 +29,22 @@ data Game = Game {
     curTurn :: Player
 } deriving Show
 
--- Initial game which board is of size n x n,
--- starting with O as the first player.
 newGame :: Game
 newGame = Game {
     board = emptyGrid,
     curTurn = X
 }
 
+
 getWinSeqs :: Grid -> [[Marking]]
 getWinSeqs grid = horizontal ++ vertical ++ [fDiag, bDiag]
   where horizontal = grid
         vertical = transpose grid
-        fDiag = zipWith (\ i x -> i !! (n - x - 1)) grid [0..]
+        fDiag = zipWith (!!) (reverse grid) [0..]
         bDiag = zipWith (!!) grid [0..]
 
--- Check if a game has been won on a board.
-isWin :: Game -> Maybe Player
-isWin (Game grid _)
+isWin :: Grid -> Maybe Player
+isWin grid
     | isWin' X  = Just X
     | isWin' O  = Just O
     | otherwise = Nothing
@@ -54,16 +52,17 @@ isWin (Game grid _)
         isWin' :: Player -> Bool
         isWin' player = any (all (== Just player)) $ getWinSeqs grid
 
--- Make the next move.
-move :: Game -> Position -> Game
-move (Game grid player) (i, j) = Game {
-    board = nextGrid,
-    curTurn = nextPlayer
-} where
-    nextGrid =
-        if isNothing $ grid !! i !! j
-        then set (ix i . ix j) (Just player) grid
-        else error "position is occupied"
-    nextPlayer
-        | player == X = O
-        | otherwise   = X
+move :: Int -> Int -> Game -> Maybe Game
+move i j (Game grid player) = case grid !! i !! j of
+    Just _ -> Nothing
+    Nothing -> Just Game {
+        board = set (ix i . ix j) (Just player) grid,
+        curTurn = nextPlayer player
+    }
+
+moves :: Game -> [Game]
+moves game = catMaybes [move x y game | x <- [0..n - 1], y <- [0..n - 1]]
+
+nextPlayer :: Player -> Player
+nextPlayer X = O
+nextPlayer O = X
