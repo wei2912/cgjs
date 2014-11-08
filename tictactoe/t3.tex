@@ -41,30 +41,6 @@ where `\_' represents an empty square and `O' and `X' represent their respective
 
 \section{Checking for a win}
 
-The following logic is used to find out if a player has already won:
-
-\begin{algorithm}
-\caption{Check if any player has won.}
-
-\begin{algorithmic}[1]
-\Procedure{isWin}{}
-  \ForAll{$seq \in this.\Call{getPosWinSeqs}{}$}
-    \For{$i \gets 0, \Call{length}{seq} - 1$}
-      \If{$\lnot seq[i] = seq[i + 1]$}
-        $break$
-      \EndIf
-    \EndFor
-    \If{$seq[0] = \qt{X}$}
-      \Return $\qt{X}$
-    \ElsIf{$seq[0] = \qt{O}$}
-      \Return $\qt{O}$
-    \EndIf
-  \EndFor
-  \Return $null$
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
 The first part of our algorithm obtains all sequences of markings which, if equal to either `X' or `O', constitutes as a win for that player. Given the following grid:
 
 \begin{verbatim}
@@ -92,60 +68,12 @@ X X X
 X X _
 \end{verbatim}
 
-The forward diagonal is comprised of only `X'. Hence, it can be concluded that the player `X' has won.
+In the example, the forward diagonal is comprised of only `X'. Hence, it can be concluded that the player `X' has won.
 
-We iterate through all these sequences which the function `getPosWinSeqs' has generated.
+We iterate through all these sequences.
 
-For each sequence, if every element in the sequence is equal to each other and equal to either `X' or `O', we return the corresponding players.
-
-The moment a winning sequence is found, the player that has won is returned. Otherwise, the function continues to look through the list of sequences.
+For each sequence, if every element in the sequence is equal to either `X' or `O', it can be concluded that either `X' or `O' has won. Hence, the player that has won is returned. Otherwise, the function continues to look through the list of sequences.
 
 If no winning sequence is found, the function returns null, which indicates that the game has not finished.
-
-In order to get the possible winning sequences, we detail out the following algorithm:
-
-\begin{algorithm}
-\caption{Obtain the possible winning sequences.}
-
-\begin{algorithmic}[1]
-\Procedure{getPosWinSeqs}{}
-  \State $rows \gets this.grid$
-  \For{$i \gets 0, \Call{length}{this.grid}$}
-    \For{$j \gets 0, \Call{length}{this.grid}$}
-      \State $cols[i][j] \gets this.grid[j][i]$
-    \EndFor
-  \EndFor
-  \For{$i \gets 0, \Call{length}{this.grid}$}
-    \State $fDiag[i] \gets this.grid[i][\Call{length}{this.grid} - i - 1]$
-  \EndFor
-  \For{$i \gets 0, \Call{length}{this.grid}$}
-    \State $bDiag[i] \gets this.grid[i][i]$
-  \EndFor
-  \Return $rows + cols + [fDiag, bDiag]$
-\EndProcedure
-\end{algorithmic}
-\end{algorithm}
-
-Firstly, the function sets `rows' to the grid itself. This is because the grid itself is defined as a set of rows in order.
-
-Secondly, the function sets `cols' to the transposition of `this.grid'. The following grid:
-
-\begin{verbatim}
-O O _
-X _ X
-O _ X
-\end{verbatim}
-
-becomes:
-
-\begin{verbatim}
-O X O
-O _ _
-_ X X
-\end{verbatim}
-
-Thirdly, the function sets `fDiag' to the forward diagonal of the array and `bDiag' to the backward diagonal of the array.
-
-Finally, the possible winning sequences are collated and returned as a two-dimensional array.
 
 \end{document}
