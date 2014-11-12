@@ -37,11 +37,13 @@ newGame = Game {
 
 
 getWinSeqs :: Grid -> [[Marking]]
-getWinSeqs grid = horizontal ++ vertical ++ [fDiag, bDiag]
-  where horizontal = grid
-        vertical = transpose grid
-        fDiag = zipWith (!!) (reverse grid) [0..]
-        bDiag = zipWith (!!) grid [0..]
+getWinSeqs grid =
+    horizontal ++ vertical ++ [fDiag, bDiag]
+    where
+    horizontal = grid
+    vertical = transpose grid
+    fDiag = zipWith (!!) (reverse grid) [0..]
+    bDiag = zipWith (!!) grid [0..]
 
 isWin :: Grid -> Maybe Player
 isWin grid
@@ -49,19 +51,24 @@ isWin grid
     | isWin' O  = Just O
     | otherwise = Nothing
     where
-        isWin' :: Player -> Bool
-        isWin' player = any (all (== Just player)) $ getWinSeqs grid
+    isWin' :: Player -> Bool
+    isWin' player = any (all (== Just player)) $ getWinSeqs grid
 
 move :: Int -> Int -> Game -> Maybe Game
-move i j (Game grid player) = case grid !! i !! j of
-    Just _ -> Nothing
-    Nothing -> Just Game {
-        board = set (ix i . ix j) (Just player) grid,
-        curTurn = nextPlayer player
-    }
+move i j (Game grid player) =
+    case grid !! i !! j of
+        Just _ -> Nothing
+        Nothing -> Just Game {
+            board = set (ix i . ix j) (Just player) grid,
+            curTurn = nextPlayer player
+        }
 
 moves :: Game -> [Game]
-moves game = catMaybes [move x y game | x <- [0..n - 1], y <- [0..n - 1]]
+moves game =
+    catMaybes do
+        x <- [0..n - 1]
+        y <- [0..n - 1]
+        move x y game
 
 nextPlayer :: Player -> Player
 nextPlayer X = O
