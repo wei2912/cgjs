@@ -16,10 +16,14 @@ import Data.Maybe (catMaybes)
 n :: Int
 n = 3
 
-data Player = X | O deriving (Show, Read, Eq)
-type Marking = Maybe Player
+data Player = X | O
+    deriving (Show, Read, Eq)
 
+type Marking = Maybe Player
 type Grid = [[Marking]]
+
+data GameState = Won Player | Draw | Running
+    deriving (Show, Read, Eq)
 
 emptyGrid :: Grid
 emptyGrid = replicate n $ replicate n Nothing
@@ -35,24 +39,26 @@ newGame = Game {
     curTurn = X
 }
 
-
 getWinSeqs :: Grid -> [[Marking]]
 getWinSeqs grid =
     horizontal ++ vertical ++ [fDiag, bDiag]
     where
-    horizontal = grid
-    vertical = transpose grid
-    fDiag = zipWith (!!) (reverse grid) [0..]
-    bDiag = zipWith (!!) grid [0..]
+        horizontal = grid
+        vertical = transpose grid
+        fDiag = zipWith (!!) (reverse grid) [0..]
+        bDiag = zipWith (!!) grid [0..]
 
-isWin :: Grid -> Maybe Player
+isWin :: Grid -> GameState
 isWin grid
-    | isWin' X  = Just X
-    | isWin' O  = Just O
-    | otherwise = Nothing
+    | isWin' X = Won X
+    | isWin' O = Won O
+    | isDraw = Draw
+    | otherwise = Running
     where
-    isWin' :: Player -> Bool
-    isWin' player = any (all (== Just player)) $ getWinSeqs grid
+        isWin' :: Player -> Bool
+        isWin' player = any (all (== Just player)) $ getWinSeqs grid
+        isDraw :: Bool
+        isDraw = all (\ row -> all (/= Nothing) row) grid
 
 move :: Int -> Int -> Game -> Maybe Game
 move i j (Game grid player) =
@@ -64,11 +70,7 @@ move i j (Game grid player) =
         }
 
 moves :: Game -> [Game]
-moves game =
-    catMaybes do
-        x <- [0..n - 1]
-        y <- [0..n - 1]
-        move x y game
+moves game = catMaybes [move x y game | x <- [0..n - 1], y <- [0..n - 1]]
 
 nextPlayer :: Player -> Player
 nextPlayer X = O
