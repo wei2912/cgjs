@@ -1,10 +1,342 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Guess the Number</title>
-  </head>
-  <body>
-    <script src="./main.js"></script>
-  </body>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Guess the Number — Creating Games with JavaScript</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../slides/css/reveal.css">
+		<link rel="stylesheet" href="../slides/css/theme/simple.css" id="theme">
+		<style>
+		.solarized body { background: #fdf6e3; }
+		</style>
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../slides/lib/css/sunburst.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/print/pdf.css' : '../slides/css/print/paper.css';
+			document.getElementsByTagName('head')[0].appendChild(link);
+		</script>
+	</head>
+
+	<body>
+		<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				# Guess the Number
+
+				Lesson 2 of [Creating Games with JavaScript](http://git.io/cgjs-15).
+
+				Benjamin Tan | Ng Wei En
+			</section>
+
+			<section data-state="solarized">
+				<section data-markdown>
+					# "Hello, World!": Exercises
+
+					Let's take a look at your work.
+				</section>
+
+				<section data-markdown>
+					To be filled up by the next lesson.
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Branches
+				</section>
+
+				<section data-markdown>
+					## if...else
+
+					```js
+					if (condition) {
+					  "statements to be processed if" +
+					  " condition is truthy";
+					} else {
+					  "statements to be processed if" +
+					  " condition is falsey";
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## if...else
+
+					```js
+					var number = 5;
+
+					if (number < 10) {
+					  alert('number is less than 10');
+					} else {
+					  alert('number is 10 or greater');
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## if...else if...else
+
+					```js
+					var number = 15;
+
+					if (number < 10) {
+					  alert('number is less than 10');
+					} else if (number < 20) {
+					  alert('number is 10 or greater but ' +
+					        'lesser than 20');
+					} else {
+					  alert('number is 20 or greater');
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## Ternary operator (the only one)
+
+					```js
+					condition
+					  ? "value if truthy"
+					  : "value if falsey";
+
+					var number = 10;
+					alert(
+					  (number > 10)
+					    ? "number over 10"
+					    : "number not over 10";
+					);
+					```
+				</section>
+
+				<section data-markdown>
+					## switch...case
+				
+					```js
+					switch (expression) {
+					  case firstLabel:
+					    // statements
+					    break;
+					  case secondLabel:
+					  case thirdLabel:
+					    // statements
+					    break;
+					  default:
+					    // statements
+					    break; // optional
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## switch...case
+				
+					```js
+					var abbreviation, name;
+					switch (abbreviation) {
+					  case 'wei2912':
+					    name = 'Ng Wei En';
+					    break;
+					  case 'demoneaux':
+					  case 'd10':
+					    name = 'Benjamin Tan';
+					    break;
+					  default:
+					    name = 'Unknown';
+					    break;
+					}
+					```
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Loops
+				</section>
+
+				<section data-markdown>
+					## `while`
+
+					```js
+					while (condition) {
+						statements;
+					}
+					```
+
+					1. If `condition` is true, proceed to step 2. Otherwise, end the loop.
+					2. Execute `statements`.
+					3. Return to step 1 again.
+
+					Every run of this process is called an iteration.
+				</section>
+
+				<section data-markdown>
+					## `while`
+
+					```js
+					// declare variables first
+					var i = 1, noOfTimes = 10;
+
+					while (i <= noOfTimes) {
+					  alert("Alert no. " + i);
+					  ++i;
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## `do`...`while`
+
+					```js
+					do {
+					  statements;
+					} while (condition);
+					```
+
+					1. Execute `statements`.
+					2. If `condition` is true, return to step 1. Otherwise, end the loop.
+				</section>
+
+				<section data-markdown>
+					## `do`...`while`
+
+					```js
+					// declare variables first
+					var i = 1, noOfTimes = 10;
+					do {
+					  alert("Alert no. " + i);
+					  ++i;
+					} while (i <= noOfTimes);
+					```
+				</section>
+
+				<section data-markdown>
+					## `for`
+
+					```js
+					for (init; condition; update) {
+					  statements;
+					}
+					```
+
+					1. Execute `init`.
+					2. If condition is truthy, proceed to step 3. Otherwise, end the loop.
+					3. Execute `statements`.
+					4. Execute `update`.
+					5. Return to step 2.
+				</section>
+
+				<section data-markdown>
+					## `for`
+
+					```js
+					for (
+					  var i = 1, noOfTimes = 10; // init
+					  i <= noOfTimes;            // condition
+					  ++i                        // update
+					) {
+					  alert('Alert no. ' + i);
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## `continue`
+
+					```js
+					for (init; condition; update) {
+					  continue;
+					}
+					while (condition) {
+					  continue;
+					}
+					do {
+					  continue;
+					} while (condition);
+					```
+
+					`continue` skips the current execution of `statements` and goes to the next iteration.
+				</section>
+
+				<section data-markdown>
+					## `continue`
+
+					```js
+					// Alert from 0 up to 100 …
+					for (var i = 0; i < 100; ++i) {
+					  // … but don’t alert multiples of 13
+					  if (i % 13 == 0) {
+					    continue; 
+					    // … skips to ++i, then i < 100, …
+					  } else {
+					    alert(i);
+					  }
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## `break`
+
+					```js
+					for (init; condition; update) {
+					  break;
+					}
+					while (condition) {
+					  break;
+					}
+					do {
+					  break;
+					} while (condition);
+					```
+				</section>
+
+				<section data-markdown>
+					## `break`
+
+					```js
+					// Alert from 0 up to 100 …
+					for (var i = 0; i < 100; ++i) {
+					  alert(i);
+					  // … but end at the first multiple
+					  // of 13 encountered
+					  if (i % 13 == 0) {
+					    break;
+					  }
+					}
+					```
+				</section>
+			</section>
+		</div>
+		</div>
+
+		<script src="../slides/lib/js/head.min.js"></script>
+		<script src="../slides/js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{ src: '../slides/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../slides/plugin/markdown/marked.js' },
+					{ src: '../slides/plugin/markdown/markdown.js' },
+					{ src: '../slides/plugin/highlight/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../slides/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../slides/plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
 </html>
