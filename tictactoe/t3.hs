@@ -33,7 +33,6 @@ data Game = Game {
     curTurn :: Player
 } deriving Show
 
-newGame :: Game
 newGame = Game {
     board = emptyGrid,
     curTurn = X
@@ -72,6 +71,5 @@ move i j (Game grid player) =
 moves :: Game -> [Game]
 moves game = catMaybes [move x y game | x <- [0..n - 1], y <- [0..n - 1]]
 
-nextPlayer :: Player -> Player
 nextPlayer X = O
 nextPlayer O = X
