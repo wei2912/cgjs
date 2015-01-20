@@ -1,12 +1,531 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Hello, World!</title>
-  </head>
-  <body>
-    <script>
-      alert("Hello, World!");
-    </script>
-  </body>
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>Hello, World! — Creating Games with JavaScript</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../slides/css/reveal.css">
+		<link rel="stylesheet" href="../slides/css/theme/simple.css" id="theme">
+		<style>
+		.solarized body { background: #fdf6e3; }
+		</style>
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../slides/lib/css/sunburst.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/print/pdf.css' : '../slides/css/print/paper.css';
+			document.getElementsByTagName('head')[0].appendChild(link);
+		</script>
+	</head>
+
+	<body>
+		<div class="reveal">
+		<div class="slides">
+
+			<section data-markdown data-state="solarized">
+				## Contacts
+
+				| Name | Benjamin | Wei En |
+				|---|---|---|
+				| Email | demoneaux@gmail.com | weien1292@gmail.com |
+				| GitHub | [@d10](https://github.com/d10) | [@wei2912](https://github.com/wei2912) |
+				| Twitter | [@demoneaux](https://twitter.com/demoneaux) | [@wei2912](https://twitter.com/wei2912) |
+			</section>
+
+			<section data-markdown>
+				# Hello, World!
+
+				[git.io/gdjs15-l1](http://git.io/gdjs15-l1) | [Creating Games with JavaScript](https://wei2912.github.io/gamedesign-js/)
+
+				&lt;small&gt;[Benjamin Tan](https://twitter.com/demoneaux) | [Ng Wei En](https://twitter.com/wei2912)&lt;/small&gt;
+			</section>
+
+			<section data-state="solarized">
+				<section data-markdown>
+					# Introduction
+				</section>
+
+				<section data-markdown style="text-align: left">
+					## Course Outline
+
+					**L1** “Hello, World!”
+					**L2** Guess the Number
+					**L3** Tic-Tac-Toe (Logic)
+					**L4** Tic-Tac-Toe (UI)
+					**L5** HTML5 Canvas
+					**L6/7** Snake (final project)
+
+					&lt;small&gt;1 extra lesson to finish up whatever’s left ;)&lt;/small&gt;
+				</section>
+
+				<section data-markdown style="text-align: left">
+					## Goals
+
+					You should learn how to:
+
+					 * Write simple games
+					 * Understand how programs work
+
+					More importantly, we hope to provide an introduction which enables you to go deeper into programming and computer science if you are interested.
+				</section>
+
+				<section data-markdown>
+					## Our Aim
+
+					![Mind Blown](http://courseware.codeschool.com/images/blog/mind-blown.gif)
+				</section>
+
+				<section data-markdown>
+					## Resources
+
+					 * Links
+					 * Slides
+					 * Demos
+					 * Exercises
+					 * Everything else
+
+					[git.io/gamedesign-js-2015](http://git.io/gamedesign-js-2015)
+				</section>
+			</section>
+
+			<section data-state="solarized">
+				<section data-markdown>
+					# What You Need
+				</section>
+
+				<section data-markdown>
+					## Sublime Text 3
+
+					![Sublime Text](img/sublimetext.png)
+
+					[sublimetext.com/3](http://www.sublimetext.com/3)    
+					&lt;small&gt;Image from [sublimetext.com](http://www.sublimetext.com/blog/articles/sublime-text-2-build-2165)&lt;/small&gt;
+				</section>
+
+				<section data-markdown>
+					## GitHub
+
+					[github.com](https://github.com/)
+				</section>
+
+				<section data-markdown>
+					## Say “Hi”
+
+					[git.io/2QcG0g](http://git.io/2QcG0g)
+				</section>
+
+				<section data-markdown>
+					## JS Bin
+
+					[jsbin.com](http://jsbin.com/)
+				</section>
+			</section>
+
+			<section data-state="solarized">
+				<section data-markdown>
+					# Technologies
+				</section>
+
+				<section data-markdown>
+					## Technologies
+
+					| Technology | Purpose |
+					|---|---|
+					| HTML | Content |
+					| CSS | Styles |
+					| JavaScript | Interactivity |
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Getting Started
+				</section>
+
+				<section data-markdown>
+					## Console
+
+					| Browser | Shortcut |
+					|---|---|
+					| Chrome | F12 |
+					| Firefox | F12 |
+					| IE | F12 |
+					| Safari | Preferences > Advanced > Show Develop Menu |
+				</section>
+
+
+				<section data-markdown>
+					## Getting Started
+
+					```js
+					/* This code creates an alert containing the extremely magical number
+					known as 42. */
+					// comment
+
+					// 4 statements
+					// variable declaration
+					var num;
+					// assign the 42 to `num` using the `=` operator
+					num = 42;
+
+					num; // returns 42
+
+					// invokes the `alert` function with `num`
+					alert(num);
+					```
+				</section>
+
+				<section data-markdown>
+					## Variables
+
+					```js
+					// declare 1 variable
+					var a;
+
+					// declare and assign value to variable
+					var b = 1000;
+
+					// declare 2 variables
+					var c, d;
+
+					// declare 3 variables and assign 1000 and
+					// 9000 to `e` and `f` respectively
+					var e = 1000,
+					    f = 9000, g;
+					```
+				</section>
+
+				<section data-markdown>
+					## JavaScript Types
+
+					 * Primitives
+					 * Objects (Covered in L2)
+				</section>
+
+				<section data-markdown>
+					## Primitive Types
+
+					 * `string`
+					 * `number`
+					 * `boolean`
+					 * `null`
+					 * `undefined`
+				</section>
+
+				<section data-markdown>
+					## Strings
+
+					```js
+					var single = 'Single-quoted string';
+					var double = "Double-quoted string";
+
+					// example usage
+					var text = 'Super long paragraph of text...';
+					// ...
+					alert(text);
+					// again ...
+					alert(text);
+					```
+				</section>
+
+				<section data-markdown>
+					## Strings
+
+					```js
+					"Strings can be concatenated " + "using the '+' operator";
+
+					var string = "Hello, ";
+
+					alert(string + "World!");
+					```
+				</section>
+
+				<section data-markdown>
+					## Numbers
+
+					```js
+					var num = 9000;
+					var negativeNum = -1000;
+					var zero = 0;
+					var decimal = 0.9001;
+					var exponent = 19.50e-2; // 0.195
+					```
+				</section>
+
+				<section data-markdown>
+					## Booleans
+
+					```js
+					true;
+					false;
+					```
+				</section>
+
+				<section data-markdown>
+					## `null` and `undefined`
+
+					```js
+					var undef;
+					// undefined
+
+					var nullVar = null;
+					// null
+					```
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Operators
+				</section>
+
+				<section data-markdown>
+					## Operators &lt;small&gt;(aka. OP)&lt;/small&gt;
+
+					 * Assignment
+					 * Arithmetic &lt;small&gt;(that is, math)&lt;/small&gt;
+					 * Operator Precedence
+					 * Assignment with Operation
+					 * Equality
+					 * Relational
+					 * Logical
+				</section>
+
+				<section data-markdown>
+					## Assignment Operator
+
+					```js
+					var a = 0;
+					a = a + 10;
+
+					var firstName, lastName;
+					// assign to several variables
+					firstName = lastName = "";
+					```
+				</section>
+
+				<section data-markdown>
+					## Arithmetic Operators &lt;small&gt;(math: our *favourite* subject)&lt;/small&gt;
+
+					```js
+					5 + 10; // 15
+					7 - 2;  // 5
+					9 * 8;  // 72
+					10 / 2; // 5
+					10 % 3; // 1; remainder of 10 / 3
+					```
+				</section>
+
+				<section data-markdown>
+					## Unary Operators (1/2)
+
+					```js
+					// `-`:
+					// converts to number and reverses sign
+					var negativeNumber = -50;
+					// -50
+					```
+				</section>
+
+				<section data-markdown>
+					## Unary Operators (2/2)
+
+					```js
+					var number = 50;
+
+					// increment
+					++number;
+					// 51
+
+					// decrement
+					--number;
+					// 50
+					```
+				</section>
+
+				<section data-markdown>
+					## Operator Precedence
+
+					```js
+					3 + 30 / 2 - 3 * 3;
+					// 3 + 15 - 9 = 9
+
+					(3 + 30) / (2 - 3) * 3;
+					// 33 / (-1) * 3 = -99
+
+					// TL;DR: It’s math.
+					```
+				</section>
+
+				<section data-markdown>
+					## Assignment with Operation
+
+					```js
+					var number = 50;
+					number += 3;  // number = number + 3;
+					number -= 10; // number = number - 10;
+					number *= 2;  // number = number * 2;
+					number /= 3;  // number = number / 3;
+					number %= 5;  // number = number % 5;
+					```
+				</section>
+
+				<section data-markdown>
+					## Equality/Inequality Operators
+
+					```js
+					3 == 3; // true
+					5 == 3; // false
+
+					'a' == 'a';  // true
+					'ab' == 'a'; // false
+
+					3 != 3; // false
+					5 != 3; // true
+
+					'a' != 'a';  // false
+					'ab' != 'a'; // true
+					```
+				</section>
+
+				<section data-markdown>
+					## Relational Operators (Numbers)
+
+					```js
+					1 > 4;      // false
+					1 < 4;      // true
+
+					1.5 <= 1.5; // true
+					3 >= 2;     // true
+					```
+				</section>
+
+				<section data-markdown>
+					## Relational Operators (Strings)
+
+					```js
+					// comparing strings
+
+					"a" < "b";   // true
+					"b" < "c";   // true
+					"ab" < "ac"; // true
+					```
+				</section>
+
+				<section data-markdown>
+					## Logical Operator — AND
+
+					```js
+					expr1 && expr2;
+
+					var value = 10;
+					(value > 10) && (value <= 100);
+					// (value > 10) AND (value ≤ 100)
+					// false
+					```
+				</section>
+
+				<section data-markdown>
+					## Logical Operator — OR
+
+					```js
+					expr1 || expr2;
+
+					var value = 10;
+					(value > 10) || (value <= 100);
+					// (value > 10) OR (value ≤ 100)
+					// true
+					```
+				</section>
+
+				<section data-markdown>
+					## Logical Operator — NOT
+
+					```js
+					!expr;
+
+					var number = 10;
+					number < 10;
+					// false
+					!(number < 10);
+					// true
+					```
+				</section>
+			</section>
+
+			<section data-state="solarized">
+				<section data-markdown>
+					# Fin.
+
+					Lesson 1: Hello, World! | [git.io/gdjs15-l1](http://git.io/gdjs15-l1)
+					[Creating Games with JavaScript](https://wei2912.github.io/gamedesign-js/)
+
+					&lt;small&gt;[Benjamin Tan](https://twitter.com/demoneaux) | [Ng Wei En](https://twitter.com/wei2912)&lt;/small&gt;
+				</section>
+
+				<section data-markdown>
+					## [developer.mozilla.org](https://developer.mozilla.org/en-US/)
+
+					![Mozilla Developer Network](img/mdn.png)
+				</section>
+
+				<section data-markdown>
+					## RTFM
+
+					![RTFM](http://imgs.xkcd.com/comics/rtfm.png)
+
+					Life is too short for man pages,
+					but occasionally much too short without them.
+				</section>
+
+				<section data-markdown>
+					## Exercises
+
+					[git.io/gamedesign-js-2015](git.io/gamedesign-js-2015)
+				</section>
+			</section>
+
+			<section data-markdown data-state="solarized">
+				## Contacts
+
+				| Name | Benjamin | Wei En |
+				|---|---|---|
+				| Email | demoneaux@gmail.com | weien1292@gmail.com |
+				| GitHub | [@d10](https://github.com/d10) | [@wei2912](https://github.com/wei2912) |
+				| Twitter | [@demoneaux](https://twitter.com/demoneaux) | [@wei2912](https://twitter.com/wei2912) |
+			</section>
+
+		</div>
+		</div>
+
+		<script src="../slides/lib/js/head.min.js"></script>
+		<script src="../slides/js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{ src: '../slides/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../slides/plugin/markdown/marked.js' },
+					{ src: '../slides/plugin/markdown/markdown.js' },
+					{ src: '../slides/plugin/highlight/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../slides/plugin/zoom-js/zoom.js', async: true },
+					{ src: '../slides/plugin/notes/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
 </html>
