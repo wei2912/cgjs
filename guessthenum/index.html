@@ -41,7 +41,7 @@
 
 			<section data-state="solarized">
 				<section data-markdown>
-					# "Hello, World!": Exercises
+					# “Hello, World!”: Exercises
 
 					Let's take a look at your work.
 				</section>
@@ -57,21 +57,41 @@
 				</section>
 
 				<section data-markdown>
-					## if...else
+					## `if`
 
 					```js
 					if (condition) {
-					  "statements to be processed if" +
-					  " condition is truthy";
-					} else {
-					  "statements to be processed if" +
-					  " condition is falsey";
+					  "statements to be processed if condition is truthy";
 					}
 					```
 				</section>
 
 				<section data-markdown>
-					## if...else
+					## `if`
+
+					```js
+					var number = 5;
+
+					if (number < 10) {
+					  alert('number is less than 10');
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## `if…else`
+
+					```js
+					if (condition) {
+					  "statements to be processed if condition is truthy";
+					} else {
+					  "statements to be processed if condition is falsey";
+					}
+					```
+				</section>
+
+				<section data-markdown>
+					## `if…else`
 
 					```js
 					var number = 5;
@@ -85,7 +105,7 @@
 				</section>
 
 				<section data-markdown>
-					## if...else if...else
+					## `if…else`
 
 					```js
 					var number = 15;
@@ -93,8 +113,7 @@
 					if (number < 10) {
 					  alert('number is less than 10');
 					} else if (number < 20) {
-					  alert('number is 10 or greater but ' +
-					        'lesser than 20');
+					  alert('number is 10 or greater but lesser than 20');
 					} else {
 					  alert('number is 20 or greater');
 					}
@@ -105,9 +124,7 @@
 					## Ternary operator (the only one)
 
 					```js
-					condition
-					  ? "value if truthy"
-					  : "value if falsey";
+					condition ? "value if truthy" : "value if falsey";
 
 					var number = 10;
 					alert(
@@ -119,7 +136,7 @@
 				</section>
 
 				<section data-markdown>
-					## switch...case
+					## `switch`
 				
 					```js
 					switch (expression) {
@@ -138,7 +155,7 @@
 				</section>
 
 				<section data-markdown>
-					## switch...case
+					## `switch`
 				
 					```js
 					var abbreviation, name;
@@ -168,7 +185,7 @@
 
 					```js
 					while (condition) {
-						statements;
+					  statements;
 					}
 					```
 
@@ -194,7 +211,7 @@
 				</section>
 
 				<section data-markdown>
-					## `do`...`while`
+					## `do…while`
 
 					```js
 					do {
@@ -207,7 +224,7 @@
 				</section>
 
 				<section data-markdown>
-					## `do`...`while`
+					## `do…while`
 
 					```js
 					// declare variables first
@@ -313,6 +330,180 @@
 					    break;
 					  }
 					}
+					```
+				</section>
+
+				<section data-markdown>
+					## Labeled loops
+
+					```js
+					outer:
+					while (condition) {
+					  for (init; condition; update) {
+					    if (/* … */) {
+					      break outer; 
+					      // exit both inner and outer loops
+					    } else {
+					      continue outer; 
+					      // skip to next iteration of outer loop
+					    }
+					  }
+					}
+					```
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Objects
+				</section>
+
+				<section data-markdown>
+					## Objects
+
+					 * Storage containers
+					 * Associate values with keys
+					 * Can contain anything
+				</section>
+
+				<section data-markdown>
+					## Creating Objects
+
+					```js
+					var object = {
+					  'x': 'Hello',
+					  'y': 'Hello2'
+					};
+					```
+				</section>
+
+				<section data-markdown>
+					## Modifying Objects
+
+					```js
+					var object = { 'x': 'Hello' };
+
+					object.x = 'Hello World';
+					object.y = 100;
+
+					delete object.y;
+					object.y; // undefined
+
+					object.nonExistentKey; // undefined
+					```
+				</section>
+
+				<section data-markdown>
+					## Comparing Objects
+
+					```js
+					var object = {};
+
+					object == {}; // false
+
+					object == object; // true
+					```
+				</section>
+			</section>
+
+			<section>
+				<section data-markdown>
+					# Functions
+				</section>
+
+				<section data-markdown>
+					## Functions
+
+					 * Objects
+					 * Encapsulate pieces of code
+					 * Make it easier to program
+					 * 1 per action
+				</section>
+
+				<section data-markdown>
+					## Creating Functions
+
+					```js
+					// function declaration
+					function sayHi(name) {
+					  alert('Hi ' + name + '!');
+					}
+
+					sayHi('Benjamin');
+
+					// note: function declarations **cannot** be
+					// used reliably in branches/loops
+					```
+				</section>
+
+				<section data-markdown>
+					## Creating Functions
+
+					```js
+					// function expression
+					var sayHi = function(name) {
+					  alert('Hi ' + name + '!');
+					};
+
+					sayHi('Jared');
+
+					// note: function expressions **can** be
+					// used reliably in branches/loops
+					```
+				</section>
+
+				<section data-markdown>
+					## Function Scope
+
+					```js
+					var name = 'name';
+					function test() {
+					  var name = 'Benjamin';
+					  console.log(name);
+					}
+					test(); // logs 'Benjamin'
+					console.log(name); // 'name'
+					```
+				</section>
+
+				<section data-markdown>
+					## Returning Values
+
+					```js
+					function noop() {}
+
+					noop(); // undefined
+
+					function sayHi(name) {
+					  return 'Hi ' + name + '!';
+					}
+
+					sayHi('Wei En;); // 'Hi Wei En!'
+					```
+				</section>
+
+				<section data-markdown>
+					## Arguments
+
+					 * Primitives are passed into functions as values
+					 * Objects are passed into functions by reference
+				</section>
+				
+				<section data-markdown>
+					## Arguments
+
+					```js
+					var number = 10;
+					var object = {};
+
+					function modifyArguments(num, obj) {
+					    num = 1000;
+					    obj.x = 'x';
+					}
+
+					modifyArguments(number, object);
+					console.log(number); // 10
+					console.log(object.x); // 'x'
 					```
 				</section>
 			</section>
