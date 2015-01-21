@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+
+		<title>DOM — Creating Games with JavaScript</title>
+
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+
+		<link rel="stylesheet" href="../slides/css/reveal.css">
+		<link rel="stylesheet" href="../slides/css/simple.css" id="theme">
+
+		<!-- Code syntax highlighting -->
+		<link rel="stylesheet" href="../slides/css/sunburst.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement('link');
+			link.rel = 'stylesheet';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/pdf.css' : '../slides/css/paper.css';
+			document.getElementsByTagName('head')[0].appendChild(link);
+		</script>
+	</head>
+
+	<body>
+		<div class="reveal">
+		<div class="slides">
+			<section data-markdown>
+				# DOM
+
+				Lesson 4 of [Creating Games with JavaScript](http://git.io/cgjs-15).
+
+				Benjamin Tan | Ng Wei En
+			</section>
+
+			<section data-background="#fdf6e3">
+				<section data-markdown><script type="text/template">
+					# Previously...
+
+					<h3 class="fragment">on the Flash</h2>
+				</script></section>
+
+				<section data-markdown>
+					## HTML
+
+					http://www.codecademy.com/en/tracks/web -- Introduction to HTML
+				</section>
+
+				<section data-markdown>
+					## CSS
+
+					https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started up till chapter 6
+				</section>
+			</section>			
+
+			<section>
+				<section data-markdown>
+					# Introduction to DOM
+				</section>
+
+				<section data-markdown>
+					## What is the DOM?
+
+					Document Object Model
+
+					 * Representation of the HTML tree in JavaScript
+				</section>				
+
+				<section data-markdown>
+					## Selecting elements
+
+					```js
+					document.getElementById('super'); // Element
+					document.getElementByClassName('special'); // Another element
+					document.getElementByTagName('div'); // Array-like object of elements
+					```
+				</section>
+
+				<section data-markdown>
+					## Selecting elements with CSS selectors
+
+					```js
+					document.querySelector('#super'); // Element with ID of "super"
+					document.querySelector('.special'); // Array of elements with class of "special"
+					document.querySelector('div p'); // Array of `p` elements with `div` ancestor
+					```
+				</section>
+
+				<section data-markdown>
+					## Creating elements
+
+					```js
+					var divElem = document.createElement('div');
+					var scriptElem = document.createElement;
+					```
+				</section>
+
+				<section data-markdown>
+					## Modifying attributes
+
+					```js
+					divElem.id = 'shiny-div';
+					// sets the "class" attribute
+					divElem.className = 'special shiny';
+					scriptElem.src = '/path/to/file.js';
+
+					// or
+					divElem.setAttribute('id', 'shiny-div');
+					divElem.setAttribute('class', 'special shiny');
+					scriptElem.setAttribute('src', '/path/to/file.js');
+					```
+				</section>
+
+				<section data-markdown>
+					## `classList`
+
+					```js
+					divElem.classList.add('class');
+					divElem.classList.remove('useless-class');
+					divElem.classList.toggle('visible');
+					```
+				</section>
+
+				<section data-markdown>
+					## `innerHTML`
+
+					```js
+					divElem.innerHTML = 'This is a paragraph of text containing ' +
+					  ' a useless <a href="http://google.com/">link</a>.';
+					```
+
+				</section>
+
+				<section data-markdown>
+					## Inserting elements
+
+					```js
+					// append the script to the body
+					var bodyElem = document.body;
+					bodyElem.appendChild(scriptElem);
+
+					// insert the div before the first div in the page
+					var firstDiv = document.querySelector('div');
+					firstDiv.parentNode.insertBefore(divElem, firstDiv);
+					```
+				</section>
+
+				<section data-markdown>
+					## Event listeners
+
+					```js
+					elem.addEventListener('eventName', function(event) {
+					  // ...
+					}, false);
+					```
+				</section>
+			</section>
+
+			<section data-background="#fdf6e3">
+				<section data-markdown>
+					# Fin.
+				</section>
+
+				<section data-markdown>
+					## Exercises
+
+					Pick any of the following exercises from [git.io/OZCknw](http://git.io/OZCknw).
+
+					Make sure your work is different from others.
+				</section>
+			</section>
+		</div>
+		</div>
+
+		<script src="../slides/js/head.min.js"></script>
+		<script src="../slides/js/reveal.js"></script>
+		<script>
+			Reveal.initialize({
+				controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'slide',
+				dependencies: [
+					{ src: '../slides/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../slides/js/marked.js' },
+					{ src: '../slides/js/markdown.js' },
+					{ src: '../slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../slides/js/zoom.js', async: true },
+					{ src: '../slides/js/notes.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>

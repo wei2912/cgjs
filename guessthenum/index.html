@@ -11,19 +11,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../slides/css/reveal.css">
-		<link rel="stylesheet" href="../slides/css/theme/simple.css" id="theme">
-		<style>
-		.solarized body { background: #fdf6e3; }
-		</style>
+		<link rel="stylesheet" href="../slides/css/simple.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../slides/lib/css/sunburst.css">
+		<link rel="stylesheet" href="../slides/css/sunburst.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement('link');
 			link.rel = 'stylesheet';
-			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/print/pdf.css' : '../slides/css/print/paper.css';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/pdf.css' : '../slides/css/paper.css';
 			document.getElementsByTagName('head')[0].appendChild(link);
 		</script>
 	</head>
@@ -39,7 +36,7 @@
 				Benjamin Tan | Ng Wei En
 			</section>
 
-			<section data-state="solarized">
+			<section data-background="#fdf6e3">
 				<section data-markdown>
 					# “Hello, World!”: Exercises
 
@@ -497,8 +494,8 @@
 					var object = {};
 
 					function modifyArguments(num, obj) {
-					    num = 1000;
-					    obj.x = 'x';
+					  num = 1000;
+					  obj.x = 'x';
 					}
 
 					modifyArguments(number, object);
@@ -510,7 +507,7 @@
 		</div>
 		</div>
 
-		<script src="../slides/lib/js/head.min.js"></script>
+		<script src="../slides/js/head.min.js"></script>
 		<script src="../slides/js/reveal.js"></script>
 		<script>
 			Reveal.initialize({
@@ -520,12 +517,12 @@
 				center: true,
 				transition: 'slide',
 				dependencies: [
-					{ src: '../slides/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../slides/plugin/markdown/marked.js' },
-					{ src: '../slides/plugin/markdown/markdown.js' },
-					{ src: '../slides/plugin/highlight/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../slides/plugin/zoom-js/zoom.js', async: true },
-					{ src: '../slides/plugin/notes/notes.js', async: true }
+					{ src: '../slides/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../slides/js/marked.js' },
+					{ src: '../slides/js/markdown.js' },
+					{ src: '../slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../slides/js/zoom.js', async: true },
+					{ src: '../slides/js/notes.js', async: true }
 				]
 			});
 		</script>

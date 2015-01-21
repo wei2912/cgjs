@@ -11,19 +11,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../slides/css/reveal.css">
-		<link rel="stylesheet" href="../slides/css/theme/simple.css" id="theme">
-		<style>
-		.solarized body { background: #fdf6e3; }
-		</style>
+		<link rel="stylesheet" href="../slides/css/simple.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../slides/lib/css/sunburst.css">
+		<link rel="stylesheet" href="../slides/css/sunburst.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement('link');
 			link.rel = 'stylesheet';
-			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/print/pdf.css' : '../slides/css/print/paper.css';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/pdf.css' : '../slides/css/paper.css';
 			document.getElementsByTagName('head')[0].appendChild(link);
 		</script>
 	</head>
@@ -31,7 +28,7 @@
 	<body>
 		<div class="reveal">
 		<div class="slides">
-			<section data-markdown data-state="solarized">
+			<section data-markdown data-background="#fdf6e3">
 				## Contacts
 
 				| Name | Benjamin | Wei En |
@@ -49,12 +46,12 @@
 				Benjamin Tan | Ng Wei En
 			</section>
 
-			<section data-state="solarized">
+			<section data-background="#fdf6e3">
 				<section data-markdown>
 					# Introduction
 				</section>
 
-				<section data-markdown style="text-align: left">
+				<section data-markdown style="text-align: left"><script type="text/template">
 					## Course Outline
 
 					**L1** “Hello, World!”    
@@ -64,8 +61,8 @@
 					**L5** HTML5 Canvas    
 					**L6/7** Snake (final project)    
 
-					&lt;small&gt;1 extra lesson to finish up whatever’s left ;)&lt;/small&gt;
-				</section>
+					<small>1 extra lesson to finish up whatever’s left ;)</small>
+				</script></section>
 
 				<section data-markdown style="text-align: left">
 					## Goals
@@ -97,19 +94,19 @@
 				</section>
 			</section>
 
-			<section data-state="solarized">
+			<section data-background="#fdf6e3">
 				<section data-markdown>
 					# What You Need
 				</section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Sublime Text 3
 
 					![Sublime Text](img/sublimetext.png)
 
 					[sublimetext.com/3](http://www.sublimetext.com/3)    
-					&lt;small&gt;Image from [sublimetext.com](http://www.sublimetext.com/blog/articles/sublime-text-2-build-2165)&lt;/small&gt;
-				</section>
+					<small>Image from [sublimetext.com](http://www.sublimetext.com/blog/articles/sublime-text-2-build-2165)</small>
+				</script></section>
 
 				<section data-markdown>
 					## JS Bin
@@ -136,7 +133,7 @@
 				</section>
 			</section>
 
-			<section data-state="solarized">
+			<section data-background="#fdf6e3">
 				<section data-markdown>
 					# Technologies
 				</section>
@@ -214,7 +211,7 @@
 					## JavaScript Types
 
 					 * Primitives
-					 * Objects (Covered in L2)
+					 * Objects *(Covered in L2)*
 				</section>
 
 				<section data-markdown>
@@ -294,17 +291,17 @@
 					# Operators
 				</section>
 
-				<section data-markdown>
-					## Operators &lt;small&gt;(aka. OP)&lt;/small&gt;
+				<section data-markdown><script type="text/template">
+					## Operators <small>(aka. OP)</small>
 
 					 * Assignment
-					 * Arithmetic &lt;small&gt;(that is, math)&lt;/small&gt;
+					 * Arithmetic <small>(that is, math)</small>
 					 * Operator Precedence
 					 * Assignment with Operation
 					 * Equality
 					 * Relational
 					 * Logical
-				</section>
+				</script></section>
 
 				<section data-markdown>
 					## Assignment Operator
@@ -319,8 +316,8 @@
 					```
 				</section>
 
-				<section data-markdown>
-					## Arithmetic Operators &lt;small&gt;(math: our *favourite* subject)&lt;/small&gt;
+				<section data-markdown><script type="text/template">
+					## Arithmetic Operators <small>(math: our *favourite* subject)</small>
 
 					```js
 					5 + 10; // 15
@@ -329,10 +326,10 @@
 					10 / 2; // 5
 					10 % 3; // 1; remainder of 10 / 3
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
-					## Unary Operators (1/2)
+				<section data-markdown><script type="text/template">
+					## Unary Operators <small>(1/2)</small>
 
 					```js
 					// `-`:
@@ -340,10 +337,10 @@
 					var negativeNumber = -50;
 					// -50
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
-					## Unary Operators (2/2)
+				<section data-markdown><script type="text/template">
+					## Unary Operators <small>(2/2)</small>
 
 					```js
 					var number = 50;
@@ -356,7 +353,7 @@
 					--number;
 					// 50
 					```
-				</section>
+				</script></section>
 
 				<section data-markdown>
 					## Operator Precedence
@@ -403,8 +400,8 @@
 					```
 				</section>
 
-				<section data-markdown>
-					## Relational Operators (Numbers)
+				<section data-markdown><script type="text/template">
+					## Relational Operators <small>(Numbers)</small>
 
 					```js
 					1 > 4;      // false
@@ -413,10 +410,10 @@
 					1.5 <= 1.5; // true
 					3 >= 2;     // true
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
-					## Relational Operators (Strings)
+				<section data-markdown><script type="text/template">
+					## Relational Operators <small>(Strings)</small>
 
 					```js
 					// comparing strings
@@ -425,7 +422,7 @@
 					"b" < "c";   // true
 					"ab" < "ac"; // true
 					```
-				</section>
+				</script></section>
 
 				<section data-markdown>
 					## Logical Operator — AND
@@ -468,7 +465,7 @@
 				</section>
 			</section>
 
-			<section data-state="solarized">
+			<section data-background="#fdf6e3">
 				<section data-markdown>
 					# Fin.
 				</section>
@@ -497,7 +494,7 @@
 				</section>
 			</section>
 
-			<section data-markdown data-state="solarized">
+			<section data-markdown data-background="#fdf6e3">
 				## Contacts
 
 				| Name | Benjamin | Wei En |
@@ -509,7 +506,7 @@
 		</div>
 		</div>
 
-		<script src="../slides/lib/js/head.min.js"></script>
+		<script src="../slides/js/head.min.js"></script>
 		<script src="../slides/js/reveal.js"></script>
 		<script>
 			Reveal.initialize({
@@ -519,12 +516,12 @@
 				center: true,
 				transition: 'slide',
 				dependencies: [
-					{ src: '../slides/lib/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../slides/plugin/markdown/marked.js' },
-					{ src: '../slides/plugin/markdown/markdown.js' },
-					{ src: '../slides/plugin/highlight/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../slides/plugin/zoom-js/zoom.js', async: true },
-					{ src: '../slides/plugin/notes/notes.js', async: true }
+					{ src: '../slides/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../slides/js/marked.js' },
+					{ src: '../slides/js/markdown.js' },
+					{ src: '../slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../slides/js/zoom.js', async: true },
+					{ src: '../slides/js/notes.js', async: true }
 				]
 			});
 		</script>
