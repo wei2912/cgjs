@@ -1,14 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>Game Design In JavaScript</title>
+    <title>Creating Games with JavaScript</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:200,400,700">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <style>
+    /* Animations */
+    @-webkit-keyframes tada {
+      0% { -webkit-transform: scale(1); }
+      10%, 20% { -webkit-transform: scale(0.9) rotate(-3deg); }
+      30%, 50%, 70%, 90% { -webkit-transform: scale(1.1) rotate(3deg); }
+      40%, 60%, 80% { -webkit-transform: scale(1.1) rotate(-3deg); }
+      100% { -webkit-transform: scale(1) rotate(0); }
+    }
+    @keyframes tada {
+      0% { -webkit-transform: scale(1); transform: scale(1); }
+      10%, 20% { -webkit-transform: scale(0.9) rotate(-3deg); transform: scale(0.9) rotate(-3deg); }
+      30%, 50%, 70%, 90% { -webkit-transform: scale(1.1) rotate(3deg); transform: scale(1.1) rotate(3deg); }
+      40%, 60%, 80% { -webkit-transform: scale(1.1) rotate(-3deg); transform: scale(1.1) rotate(-3deg); }
+      100% { -webkit-transform: scale(1) rotate(0); transform: scale(1) rotate(0); }
+    }
+    @-webkit-keyframes shake {
+      0% { -webkit-transform: translateX(0); }
+      25% { -webkit-transform: translateX(10px); }
+      50% { -webkit-transform: translateX(0); }
+      75% { -webkit-transform: translateX(10px); }
+      100% { -webkit-transform: translateX(0); }
+    }
+    @keyframes shake {
+      0% { -webkit-transform: translateX(0); transform: translateX(0); }
+      25% { -webkit-transform: translateX(10px); transform: translateX(10px); }
+      50% { -webkit-transform: translateX(0); transform: translateX(0); }
+      75% { -webkit-transform: translateX(10px); transform: translateX(10px); }
+      100% { -webkit-transform: translateX(0); transform: translateX(0); }
+    }
+    @-webkit-keyframes pulse {
+      0% { box-shadow: 0 1px 12px rgba(51, 204, 255, 0.2); }
+      50% { box-shadow: 0 0 12px rgba(51, 204, 255, 0.9); }
+      100% { box-shadow: 0 0 12px rgba(51, 204, 255, 0.2); }
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 1px 12px rgba(51, 204, 255, 0.2); }
+      50% { box-shadow: 0 0 12px rgba(51, 204, 255, 0.9); }
+      100% { box-shadow: 0 0 12px rgba(51, 204, 255, 0.2); }
+    }
+    @-webkit-keyframes rotate {
+      0% { -webkit-transform: rotate(0); }
+      100% { -webkit-transform: rotate(360deg); }
+    }
+    @keyframes rotate {
+      0% { -webkit-transform: rotate(0); transform: rotate(0); }
+      100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+    }
+
+    /* Global styles */
+    body { font-size: 16px; font-family: Lato, Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, sans-serif; }
+    .container { max-width: 1000px !important; }
+    .container-full { position: relative; }
+    .container-full .container { max-width: 100%; }
+    .inverse { background: black; color: white; }
+    a { color: inherit; text-decoration: underline; }
+    a:hover, a:active { color: inherit; text-decoration: none; }
+
+    /* Navigation Bar */
+    .navbar-static-top { margin-bottom: 0; }
+    nav a { text-decoration: none; }
+
+    /* Intro Section */
+    .jumbotron { margin-bottom: 0; background-image: radial-gradient(rgb(100, 100, 100) 0, black 100%); }
+    h1 { padding: 30px 0; }
+    h1 span { display: block; }
+    #cg { color: #ea9999; }
+    #js { color: #fbde2d; font-family: Consolas, Courier New, Courier, monospace; font-size: 80%; }
+    #js::before { content: '// '; }
+    /* Images */
+    td { border: 0 !important; }
+    td img { border-radius: 100px; box-shadow: 0 0 12px rgba(51, 204, 255, 0.9); }
+
+    /* Subheadings */
+    h2 { color: black; margin: 0 0 20px; padding: 0; border-radius: 0 0 5px 5px; background: #cdcdcd; }
+    :target h2 { background: rgb(90, 90, 90); color: white; }
+    h2 a { display: inline-block; padding: 10px 0; width: 100%; text-decoration: none; }
+    h2 a:hover { text-decoration: underline; }
+    h2:hover, h2:active { box-shadow: 0 0 12px rgba(51, 204, 255, 0.9); }
+
+    /* Footer */
+    #fin { background: black; }
+    footer { padding: 20px 0; }
+
+    /* Larger displays */
+    @media (min-width: 768px) {
+      #js { font-size: 50%; }
+      h1 span:hover { -webkit-animation: shake 0.5s ease-in-out; animation: shake 0.5s ease-in-out; }
+      h2:hover { -webkit-animation: tada 1s, pulse 2s infinite ease-in-out; animation: tada 1s, pulse 2s infinite ease-in-out; }
+      td img:hover { -webkit-animation: rotate 1s ease-in-out, pulse 2s infinite ease-in-out; animation: rotate 1s ease-in-out, pulse 2s infinite ease-in-out; }
+      #fin { background-image: radial-gradient(rgb(100, 100, 100) 0, black 100%); }
+    }
+    </style>
   </head>
   <body>
-    <h1>Game Design In JavaScript</h1>
-    <ul>
-      <li><a href="helloworld">W1: "Hello, world!"</a></li>
-      <li><a href="guessthenum">W2: Guess the Number</a></li>
-    </ul>
+    <!-- Fixed navbar -->
+    <nav class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">CGJS</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="#intro">Home</a></li>
+            <li><a href="#overview">Overview</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Lessons <span class="caret"></span></a>
+              <ul class="dropdown-menu" role="menu">
+                <li><a href="#">Lesson 1</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </nav>
+    
+    <div id="intro" class="jumbotron inverse">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-offset-3 col-md-6">
+            <h1>
+              <span id="cg">Creating Games</span>
+              <span id="js">with JavaScript</span>
+            </h1>
+          </div>
+        </div>
+        <div class="row text-center">
+          <div class="col-md-offset-3 col-md-6">
+            <p>Victoria School 2015 Choice Elective</p>
+          </div>
+          <div class="col-md-offset-3 col-md-6">
+            <table class="table table-condensed"><tbody>
+              <tr>
+                <td>
+                  <a href="https://twitter.com/demoneaux"><img class="img" src="https://gravatar.com/avatar/029b19dba521584d83398ada3ecf6131.png?s=200" width="100" height="100" alt="Benjamin Tan"></a>
+                </td>
+                <td>
+                  <a href="https://twitter.com/wei2912"><img class="img" src="https://avatars0.githubusercontent.com/u/2070423?s=200" width="100" height="100" alt="Ng Wei En"></a>
+                </td>
+              </tr>
+              <tr>
+                <td><a href="https://d10.github.io/">Benjamin Tan</a></td>
+                <td><a href="https://wei2912.github.io/">Ng Wei En</a></td>
+              </tr>
+            </tbody></table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="overview" class="container-full"><div class="container">
+      <div class="row">
+        <h2 class="col-md-2"><a href="#overview">Overview</a></h2>
+        <p class="col-md-12 lead">
+          Ever wondered how games worked?
+        </p>
+        <p class="col-md-12">
+          In this course, we teach JavaScript, a popular web programming language, and guide students through creating their own games such as Tic-Tac-Toe and Snake. By the end of this course, every student will gain a basic understanding of programming and be able to write simple games.
+        </p>
+        <p class="col-md-12">
+          <sup>*</sup> Students are warned that this choice elective is quite intensive and will make use of math.
+        </p>
+      </div>
+    </div></div>
+
+    <div id="fin" class="container-full inverse"><div class="container">
+      <footer class="row">
+        <p class="col-md-12 text-center">
+          <strong>Creating Games with JavaScript</strong> is a Victoria School 2015 Choice Elective.<br>
+          &copy; 2015 by <a href="https://twitter.com/demoneaux">Benjamin Tan</a> and <a href="https://twitter.com/wei2912">Ng Wei En</a>
+        </p>
+      </footer>
+    </div></div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </body>
 </html>
