@@ -504,6 +504,90 @@
 					```
 				</section>
 			</section>
+			
+			<section>
+				<section data-markdown>
+					# Guess the Number
+				</section>
+				
+				<section data-markdown>
+					## Logic
+					
+					1. Generate number in range $[1, 100]$.
+					2. Prompt user for a guess.
+						1. If number is less than guess, tell the user that.
+						2. If number is more than guess, tell the user that.
+						3. If number is equal to guess, go to step 4.
+					3. Return to step 2.
+					4. Congratulate the user for getting it correct.
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					# Step 1: Generate number in range $[1, 100]$.
+				</section>
+				
+				<section data-markdown>
+					## `Math.random()`
+					RTFM!
+				</section>
+				
+				<section data-markdown>
+					`Math.random()` returns a random number in the range $[0, 1)$.
+					
+					How do we modify the number generated to get a range $[1, 100]$?
+				</section>
+				
+				<section data-markdown>
+					`Math.random() * 100` generates a random number in the range $[0, 100)$.
+					`Math.random() * 100 + 1` generates a random number in the range $[1, 100)$.
+					
+					We need to do something to trim the range and make our number an integer.
+				</section>
+				
+				<section data-markdown>
+					## Floor
+					
+					$\lfloor x \rfloor$
+					Returns the largest integer smaller than $x$.
+					
+					4.9 -> 4
+				</section>
+				
+				<section data-markdown>
+					## Ceiling
+					
+					$\lceil x \rceil$
+					Returns the smallest integer larger than $x$.
+					
+					5.3 -> 5
+				</section>
+				
+				<section data-markdown>
+					## Now... put these together.
+					
+					How would you generate a random integer in the range $[1, 100]$?
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					# Step 2-3: Compare number with our guesses
+					
+					We can make use of `prompt()`, a `while` loop, an `if..else` clause and the `break` statement to do this.
+
+					Read the docs on how to use `prompt()`!
+				</section>
+			</section>
+			
+			<section>
+				<section data-markdown>
+					# Step 4: Congratulate the user.
+					
+					This is up to you to decide.
+				</section>
+			</section>
 		</div>
 		</div>
 
