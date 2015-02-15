@@ -10,17 +10,17 @@
 
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
-		<link rel="stylesheet" href="../slides/css/reveal.css">
-		<link rel="stylesheet" href="../slides/css/simple.css" id="theme">
+		<link rel="stylesheet" href="../resources/slides/css/reveal.css">
+		<link rel="stylesheet" href="../resources/slides/css/simple.css" id="theme">
 
 		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../slides/css/sunburst.css">
+		<link rel="stylesheet" href="../resources/slides/css/sunburst.css">
 
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement('link');
 			link.rel = 'stylesheet';
-			link.href = window.location.search.match(/print-pdf/gi) ? '../slides/css/pdf.css' : '../slides/css/paper.css';
+			link.href = window.location.search.match(/print-pdf/gi) ? '../resources/slides/css/pdf.css' : '../resources/slides/css/paper.css';
 			document.getElementsByTagName('head')[0].appendChild(link);
 		</script>
 	</head>
@@ -591,8 +591,8 @@
 		</div>
 		</div>
 
-		<script src="../slides/js/head.min.js"></script>
-		<script src="../slides/js/reveal.js"></script>
+		<script src="../resources/slides/js/head.min.js"></script>
+		<script src="../resources/slides/js/reveal.js"></script>
 		<script>
 			Reveal.initialize({
 				controls: true,
@@ -601,12 +601,12 @@
 				center: true,
 				transition: 'slide',
 				dependencies: [
-					{ src: '../slides/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../slides/js/marked.js' },
-					{ src: '../slides/js/markdown.js' },
-					{ src: '../slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
-					{ src: '../slides/js/zoom.js', async: true },
-					{ src: '../slides/js/notes.js', async: true }
+					{ src: '../resources/slides/js/classList.js', condition: function() { return !document.body.classList; } },
+					{ src: '../resources/slides/js/marked.js' },
+					{ src: '../resources/slides/js/markdown.js' },
+					{ src: '../resources/slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../resources/slides/js/zoom.js', async: true },
+					{ src: '../resources/slides/js/notes.js', async: true }
 				]
 			});
 		</script>
