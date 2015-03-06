@@ -33,7 +33,21 @@ function highlight() {
 			hljs.highlightBlock(element);
 
 			// Split highlighted code into lines.
-			element.innerHTML = '<span class=line>' + element.innerHTML.replace(/\n/g, '</span><span class=line>') + '</span>';
+			element.innerHTML = 
+				element.innerHTML
+				.replace(/^(<[^>]+>)?/, function(_, html) {
+					if (html && ~html.indexOf('hljs-comment')) {
+						console.log(html.indexOf('comment'))
+						console.log(html)
+						return html + '<span class=line>';
+					} else {
+						return '<span class=line>' + (html ? html : '');
+					}
+				})
+				.replace(/\n\n/g, function() {
+					return '\n&nbsp;\n';
+				})
+				.replace(/\n/g, '</span><span class=line>') + '</span>';
 		}
 
 		Reveal.addEventListener('slidechanged', updateCurrent);

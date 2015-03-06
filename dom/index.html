@@ -12,22 +12,6 @@
 
 		<link rel="stylesheet" href="../resources/slides/css/reveal.css">
 
-		<style>
-		.line {
-			display: block;
-		}
-		.line.highlight {
-			background: white;
-		}
-		.fragment-container {
-			position: relative;
-		}
-		.fragment-container .fragment {
-			position: absolute;
-			top: 0;
-		}
-		</style>
-
 		<!-- Printing and PDF exports -->
 		<script>
 			var link = document.createElement('link');
@@ -210,7 +194,7 @@
 					{ src: '../resources/slides/js/markdown.js' },
 					{ src: '../resources/slides/js/highlight.js' },
 					{ src: '../resources/slides/js/remotes.js' },
- 					{ src: '../resources/code-highlight.js', callback: function() { highlight(); } },
+ 					{ src: '../resources/code-focus.js', callback: function() { highlight(); } },
 					{ src: '../resources/slides/js/zoom.js', async: true },
 					{ src: '../resources/slides/js/notes.js', async: true }
 				]

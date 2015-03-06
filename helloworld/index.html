@@ -99,7 +99,7 @@
 				<section data-markdown>
 					## Say “Hi”
 
-					![Say "Hi"](img/sayhi.png)
+					![Say “Hi”](img/sayhi.png)
 
 					[git.io/2QcG0g](http://git.io/2QcG0g)
 				</section>
@@ -110,15 +110,15 @@
 					# Technologies
 				</section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Technologies
 
 					| Technology | Purpose |
 					|---|---|
 					| HTML | Content |
 					| CSS | Styles |
-					| JavaScript | Interactivity |
-				</section>
+					| <span class="fragment highlight-red">JavaScript</span> | Interactivity |
+				</script></section>
 
 				<section data-markdown>
 					## Extras: JS Bin
@@ -137,15 +137,15 @@
 				<section data-markdown>
 					## Console
 
-					| Browser | Shortcut |
-					|---|---|
-					| Chrome | F12 |
-					| Firefox | F12 |
-					| IE | F12 |
-					| Safari | Preferences > Advanced > Show Develop Menu |
+					| Browser | Windows/Linux | Mac |
+					|---|---|---|
+					| Chrome/Opera | Control + ⇧ + J | ⌘ + ⌥ + J |
+					| Firefox | Control + ⇧ + K | ⌘ + ⌥ + K |
+					| IE | F12 | — |
+					| Safari | — | Preferences → Advanced → Show Develop Menu |
 				</section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Getting Started
 
 					```js
@@ -164,9 +164,16 @@
 					// invokes the `alert` function with `num`
 					alert(num);
 					```
-				</section>
+					<span class="fragment" data-code-focus="1-2"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="5"></span>
+					<span class="fragment" data-code-focus="6-7"></span>
+					<span class="fragment" data-code-focus="8-9"></span>
+					<span class="fragment" data-code-focus="11"></span>
+					<span class="fragment" data-code-focus="13-14"></span>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Variables
 
 					```js
@@ -184,7 +191,11 @@
 					var e = 1000,
 					    f = 9000, g;
 					```
-				</section>
+					<span class="fragment" data-code-focus="1-2"></span>
+					<span class="fragment" data-code-focus="4-5"></span>
+					<span class="fragment" data-code-focus="7-8"></span>
+					<span class="fragment" data-code-focus="10-13"></span>
+				</script></section>
 
 				<section data-markdown>
 					## JavaScript Types
@@ -203,7 +214,7 @@
 					* `undefined`
 				</section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Strings
 
 					```js
@@ -217,7 +228,10 @@
 					// again ...
 					alert(text);
 					```
-				</section>
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="2"></span>
+					<span class="fragment" data-code-focus="4-9"></span>
+				</script></section>
 
 				<section data-markdown>
 					## Strings
@@ -226,9 +240,10 @@
 					"Strings can be concatenated " + "using the '+' operator";
 
 					var string = "Hello, ";
-
 					alert(string + "World!");
 					```
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="3-4"></span>
 				</section>
 
 				<section data-markdown>
@@ -293,6 +308,9 @@
 					// assign to several variables
 					firstName = lastName = "";
 					```
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="2"></span>
+					<span class="fragment" data-code-focus="4-6"></span>
 				</section>
 
 				<section data-markdown><script type="text/template">
@@ -332,6 +350,8 @@
 					--number;
 					// 50
 					```
+					<span class="fragment" data-code-focus="3-5"></span>
+					<span class="fragment" data-code-focus="7-9"></span>
 				</script></section>
 
 				<section data-markdown>
@@ -460,7 +480,7 @@
 
 					![RTFM](http://imgs.xkcd.com/comics/rtfm.png)
 
-					Life is too short for man pages,
+					Life is too short for man pages,  
 					but occasionally much too short without them.
 				</section>
 
@@ -497,7 +517,8 @@
 				dependencies: [
 					{ src: '../resources/slides/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: '../resources/slides/js/markdown.js' },
-					{ src: '../resources/slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
+					{ src: '../resources/slides/js/highlight.js' },
+					{ src: '../resources/code-focus.js', callback: function() { highlight(); } },
 					{ src: '../resources/slides/js/zoom.js', async: true },
 					{ src: '../resources/slides/js/notes.js', async: true }
 				]
