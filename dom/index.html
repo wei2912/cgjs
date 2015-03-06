@@ -11,10 +11,6 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
 
 		<link rel="stylesheet" href="../resources/slides/css/reveal.css">
-		<link rel="stylesheet" href="../resources/slides/css/simple.css" id="theme">
-
-		<!-- Code syntax highlighting -->
-		<link rel="stylesheet" href="../resources/slides/css/sunburst.css">
 
 		<style>
 		.line {
@@ -94,10 +90,10 @@
 					document.getElementByTagName('div'); // Array-like object of elements
 					```
 					<div class="fragment-container">
-					<div class="fragment current-visible" data-code-highlight="1">1</div>
-					<div class="fragment current-visible" data-code-highlight="2">2</div>
-					<div class="fragment current-visible" data-code-highlight="2-3">2-3</div>
-					<div class="fragment current-visible" data-code-highlight="1-3">all</div>
+					<div class="fragment current-visible" data-code-focus="1">1</div>
+					<div class="fragment current-visible" data-code-focus="2">2</div>
+					<div class="fragment current-visible" data-code-focus="2-3">2-3</div>
+					<div class="fragment current-visible" data-code-focus="1-3">all</div>
 					</div>
 				</script></section>
 
@@ -110,8 +106,8 @@
 					document.querySelector('div p'); // Array of `p` elements with `div` ancestor
 					```
 
-					<div class="fragment grow" data-code-highlight="1">1</div>
-					<div class="fragment shrink" data-code-highlight="2">2</div>
+					<div class="fragment grow" data-code-focus="1">1</div>
+					<div class="fragment shrink" data-code-focus="2">2</div>
 				</script></section>
 
 				<section data-markdown>
@@ -211,7 +207,6 @@
 				transition: 'slide',
 				dependencies: [
 					{ src: '../resources/slides/js/classList.js', condition: function() { return !document.body.classList; } },
-					{ src: '../resources/slides/js/marked.js' },
 					{ src: '../resources/slides/js/markdown.js' },
 					{ src: '../resources/slides/js/highlight.js', },
  					{ src: '../resources/code-highlight.js', callback: function() { highlight(); } },

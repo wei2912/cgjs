@@ -1,393 +1,44 @@
 /**
- * The reveal.js markdown plugin. Handles parsing of
+ * marked - a markdown parser
+ * Copyright (c) 2011-2013, Christopher Jeffrey. (MIT Licensed)
+ * https://github.com/chjj/marked
+ */
+
+(function(){var block={newline:/^\n+/,code:/^( {4}[^\n]+\n*)+/,fences:noop,hr:/^( *[-*_]){3,} *(?:\n+|$)/,heading:/^ *(#{1,6}) *([^\n]+?) *#* *(?:\n+|$)/,nptable:noop,lheading:/^([^\n]+)\n *(=|-){3,} *\n*/,blockquote:/^( *>[^\n]+(\n[^\n]+)*\n*)+/,list:/^( *)(bull) [\s\S]+?(?:hr|\n{2,}(?! )(?!\1bull )\n*|\s*$)/,html:/^ *(?:comment|closed|closing) *(?:\n{2,}|\s*$)/,def:/^ *\[([^\]]+)\]: *<?([^\s>]+)>?(?: +["(]([^\n]+)[")])? *(?:\n+|$)/,table:noop,paragraph:/^((?:[^\n]+\n?(?!hr|heading|lheading|blockquote|tag|def))+)\n*/,
+text:/^[^\n]+/};block.bullet=/(?:[*+-]|\d+\.)/;block.item=/^( *)(bull) [^\n]*(?:\n(?!\1bull )[^\n]*)*/;block.item=replace(block.item,"gm")(/bull/g,block.bullet)();block.list=replace(block.list)(/bull/g,block.bullet)("hr",/\n+(?=(?: *[-*_]){3,} *(?:\n+|$))/)();block._tag="(?!(?:"+"a|em|strong|small|s|cite|q|dfn|abbr|data|time|code"+"|var|samp|kbd|sub|sup|i|b|u|mark|ruby|rt|rp|bdi|bdo"+"|span|br|wbr|ins|del|img)\\b)\\w+(?!:/|@)\\b";block.html=replace(block.html)("comment",/\x3c!--[\s\S]*?--\x3e/)("closed",
+/<(tag)[\s\S]+?<\/\1>/)("closing",/<tag(?:"[^"]*"|'[^']*'|[^'">])*?>/)(/tag/g,block._tag)();block.paragraph=replace(block.paragraph)("hr",block.hr)("heading",block.heading)("lheading",block.lheading)("blockquote",block.blockquote)("tag","<"+block._tag)("def",block.def)();block.normal=merge({},block);block.gfm=merge({},block.normal,{fences:/^ *(`{3,}|~{3,}) *(\S+)? *\n([\s\S]+?)\s*\1 *(?:\n+|$)/,paragraph:/^/});block.gfm.paragraph=replace(block.paragraph)("(?!","(?!"+block.gfm.fences.source.replace("\\1",
+"\\2")+"|")();block.tables=merge({},block.gfm,{nptable:/^ *(\S.*\|.*)\n *([-:]+ *\|[-| :]*)\n((?:.*\|.*(?:\n|$))*)\n*/,table:/^ *\|(.+)\n *\|( *[-:]+[-| :]*)\n((?: *\|.*(?:\n|$))*)\n*/});function Lexer(options){this.tokens=[];this.tokens.links={};this.options=options||marked.defaults;this.rules=block.normal;if(this.options.gfm)if(this.options.tables)this.rules=block.tables;else this.rules=block.gfm}Lexer.rules=block;Lexer.lex=function(src,options){var lexer=new Lexer(options);return lexer.lex(src)};
+Lexer.prototype.lex=function(src){src=src.replace(/\r\n|\r/g,"\n").replace(/\t/g,"    ").replace(/\u00a0/g," ").replace(/\u2424/g,"\n");return this.token(src,true)};Lexer.prototype.token=function(src,top){var src=src.replace(/^ +$/gm,""),next,loose,cap,bull,b,item,space,i,l;while(src){if(cap=this.rules.newline.exec(src)){src=src.substring(cap[0].length);if(cap[0].length>1)this.tokens.push({type:"space"})}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);cap=cap[0].replace(/^ {4}/gm,
+"");this.tokens.push({type:"code",text:!this.options.pedantic?cap.replace(/\n+$/,""):cap});continue}if(cap=this.rules.fences.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"code",lang:cap[2],text:cap[3]});continue}if(cap=this.rules.heading.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[1].length,text:cap[2]});continue}if(top&&(cap=this.rules.nptable.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,
+"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/\n$/,"").split("\n")};for(i=0;i<item.align.length;i++)if(/^ *-+: *$/.test(item.align[i]))item.align[i]="right";else if(/^ *:-+: *$/.test(item.align[i]))item.align[i]="center";else if(/^ *:-+ *$/.test(item.align[i]))item.align[i]="left";else item.align[i]=null;for(i=0;i<item.cells.length;i++)item.cells[i]=item.cells[i].split(/ *\| */);this.tokens.push(item);continue}if(cap=this.rules.lheading.exec(src)){src=
+src.substring(cap[0].length);this.tokens.push({type:"heading",depth:cap[2]==="="?1:2,text:cap[1]});continue}if(cap=this.rules.hr.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"hr"});continue}if(cap=this.rules.blockquote.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"blockquote_start"});cap=cap[0].replace(/^ *> ?/gm,"");this.token(cap,top);this.tokens.push({type:"blockquote_end"});continue}if(cap=this.rules.list.exec(src)){src=src.substring(cap[0].length);
+bull=cap[2];this.tokens.push({type:"list_start",ordered:bull.length>1});cap=cap[0].match(this.rules.item);next=false;l=cap.length;i=0;for(;i<l;i++){item=cap[i];space=item.length;item=item.replace(/^ *([*+-]|\d+\.) +/,"");if(~item.indexOf("\n ")){space-=item.length;item=!this.options.pedantic?item.replace(new RegExp("^ {1,"+space+"}","gm"),""):item.replace(/^ {1,4}/gm,"")}if(this.options.smartLists&&i!==l-1){b=block.bullet.exec(cap[i+1])[0];if(bull!==b&&!(bull.length>1&&b.length>1)){src=cap.slice(i+
+1).join("\n")+src;i=l-1}}loose=next||/\n\n(?!\s*$)/.test(item);if(i!==l-1){next=item[item.length-1]==="\n";if(!loose)loose=next}this.tokens.push({type:loose?"loose_item_start":"list_item_start"});this.token(item,false);this.tokens.push({type:"list_item_end"})}this.tokens.push({type:"list_end"});continue}if(cap=this.rules.html.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:this.options.sanitize?"paragraph":"html",pre:cap[1]==="pre"||cap[1]==="script",text:cap[0]});continue}if(top&&
+(cap=this.rules.def.exec(src))){src=src.substring(cap[0].length);this.tokens.links[cap[1].toLowerCase()]={href:cap[2],title:cap[3]};continue}if(top&&(cap=this.rules.table.exec(src))){src=src.substring(cap[0].length);item={type:"table",header:cap[1].replace(/^ *| *\| *$/g,"").split(/ *\| */),align:cap[2].replace(/^ *|\| *$/g,"").split(/ *\| */),cells:cap[3].replace(/(?: *\| *)?\n$/,"").split("\n")};for(i=0;i<item.align.length;i++)if(/^ *-+: *$/.test(item.align[i]))item.align[i]="right";else if(/^ *:-+: *$/.test(item.align[i]))item.align[i]=
+"center";else if(/^ *:-+ *$/.test(item.align[i]))item.align[i]="left";else item.align[i]=null;for(i=0;i<item.cells.length;i++)item.cells[i]=item.cells[i].replace(/^ *\| *| *\| *$/g,"").split(/ *\| */);this.tokens.push(item);continue}if(top&&(cap=this.rules.paragraph.exec(src))){src=src.substring(cap[0].length);this.tokens.push({type:"paragraph",text:cap[1][cap[1].length-1]==="\n"?cap[1].slice(0,-1):cap[1]});continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);this.tokens.push({type:"text",
+text:cap[0]});continue}if(src)throw new Error("Infinite loop on byte: "+src.charCodeAt(0));}return this.tokens};var inline={escape:/^\\([\\`*{}\[\]()#+\-.!_>])/,autolink:/^<([^ >]+(@|:\/)[^ >]+)>/,url:noop,tag:/^\x3c!--[\s\S]*?--\x3e|^<\/?\w+(?:"[^"]*"|'[^']*'|[^'">])*?>/,link:/^!?\[(inside)\]\(href\)/,reflink:/^!?\[(inside)\]\s*\[([^\]]*)\]/,nolink:/^!?\[((?:\[[^\]]*\]|[^\[\]])*)\]/,strong:/^__([\s\S]+?)__(?!_)|^\*\*([\s\S]+?)\*\*(?!\*)/,em:/^\b_((?:__|[\s\S])+?)_\b|^\*((?:\*\*|[\s\S])+?)\*(?!\*)/,
+code:/^(`+)\s*([\s\S]*?[^`])\s*\1(?!`)/,br:/^ {2,}\n(?!\s*$)/,del:noop,text:/^[\s\S]+?(?=[\\<!\[_*`]| {2,}\n|$)/};inline._inside=/(?:\[[^\]]*\]|[^\]]|\](?=[^\[]*\]))*/;inline._href=/\s*<?([^\s]*?)>?(?:\s+['"]([\s\S]*?)['"])?\s*/;inline.link=replace(inline.link)("inside",inline._inside)("href",inline._href)();inline.reflink=replace(inline.reflink)("inside",inline._inside)();inline.normal=merge({},inline);inline.pedantic=merge({},inline.normal,{strong:/^__(?=\S)([\s\S]*?\S)__(?!_)|^\*\*(?=\S)([\s\S]*?\S)\*\*(?!\*)/,
+em:/^_(?=\S)([\s\S]*?\S)_(?!_)|^\*(?=\S)([\s\S]*?\S)\*(?!\*)/});inline.gfm=merge({},inline.normal,{escape:replace(inline.escape)("])","~|])")(),url:/^(https?:\/\/[^\s<]+[^<.,:;"')\]\s])/,del:/^~~(?=\S)([\s\S]*?\S)~~/,text:replace(inline.text)("]|","~]|")("|","|https?://|")()});inline.breaks=merge({},inline.gfm,{br:replace(inline.br)("{2,}","*")(),text:replace(inline.gfm.text)("{2,}","*")()});function InlineLexer(links,options){this.options=options||marked.defaults;this.links=links;this.rules=inline.normal;
+if(!this.links)throw new Error("Tokens array requires a `links` property.");if(this.options.gfm)if(this.options.breaks)this.rules=inline.breaks;else this.rules=inline.gfm;else if(this.options.pedantic)this.rules=inline.pedantic}InlineLexer.rules=inline;InlineLexer.output=function(src,links,options){var inline=new InlineLexer(links,options);return inline.output(src)};InlineLexer.prototype.output=function(src){var out="",link,text,href,cap;while(src){if(cap=this.rules.escape.exec(src)){src=src.substring(cap[0].length);
+out+=cap[1];continue}if(cap=this.rules.autolink.exec(src)){src=src.substring(cap[0].length);if(cap[2]==="@"){text=cap[1][6]===":"?this.mangle(cap[1].substring(7)):this.mangle(cap[1]);href=this.mangle("mailto:")+text}else{text=escape(cap[1]);href=text}out+='<a href="'+href+'">'+text+"</a>";continue}if(cap=this.rules.url.exec(src)){src=src.substring(cap[0].length);text=escape(cap[1]);href=text;out+='<a href="'+href+'">'+text+"</a>";continue}if(cap=this.rules.tag.exec(src)){src=src.substring(cap[0].length);
+out+=this.options.sanitize?escape(cap[0]):cap[0];continue}if(cap=this.rules.link.exec(src)){src=src.substring(cap[0].length);out+=this.outputLink(cap,{href:cap[2],title:cap[3]});continue}if((cap=this.rules.reflink.exec(src))||(cap=this.rules.nolink.exec(src))){src=src.substring(cap[0].length);link=(cap[2]||cap[1]).replace(/\s+/g," ");link=this.links[link.toLowerCase()];if(!link||!link.href){out+=cap[0][0];src=cap[0].substring(1)+src;continue}out+=this.outputLink(cap,link);continue}if(cap=this.rules.strong.exec(src)){src=
+src.substring(cap[0].length);out+="<strong>"+this.output(cap[2]||cap[1])+"</strong>";continue}if(cap=this.rules.em.exec(src)){src=src.substring(cap[0].length);out+="<em>"+this.output(cap[2]||cap[1])+"</em>";continue}if(cap=this.rules.code.exec(src)){src=src.substring(cap[0].length);out+="<code>"+escape(cap[2],true)+"</code>";continue}if(cap=this.rules.br.exec(src)){src=src.substring(cap[0].length);out+="<br>";continue}if(cap=this.rules.del.exec(src)){src=src.substring(cap[0].length);out+="<del>"+
+this.output(cap[1])+"</del>";continue}if(cap=this.rules.text.exec(src)){src=src.substring(cap[0].length);out+=escape(cap[0]);continue}if(src)throw new Error("Infinite loop on byte: "+src.charCodeAt(0));}return out};InlineLexer.prototype.outputLink=function(cap,link){if(cap[0][0]!=="!")return'<a href="'+escape(link.href)+'"'+(link.title?' title="'+escape(link.title)+'"':"")+">"+this.output(cap[1])+"</a>";else return'<img src="'+escape(link.href)+'" alt="'+escape(cap[1])+'"'+(link.title?' title="'+
+escape(link.title)+'"':"")+">"};InlineLexer.prototype.smartypants=function(text){if(!this.options.smartypants)return text;return text.replace(/--/g,"\u2014").replace(/'([^']*)'/g,"\u2018$1\u2019").replace(/"([^"]*)"/g,"\u201c$1\u201d").replace(/\.{3}/g,"\u2026")};InlineLexer.prototype.mangle=function(text){var out="",l=text.length,i=0,ch;for(;i<l;i++){ch=text.charCodeAt(i);if(Math.random()>0.5)ch="x"+ch.toString(16);out+="&#"+ch+";"}return out};function Parser(options){this.tokens=[];this.token=null;
+this.options=options||marked.defaults}Parser.parse=function(src,options){var parser=new Parser(options);return parser.parse(src)};Parser.prototype.parse=function(src){this.inline=new InlineLexer(src.links,this.options);this.tokens=src.reverse();var out="";while(this.next())out+=this.tok();return out};Parser.prototype.next=function(){return this.token=this.tokens.pop()};Parser.prototype.peek=function(){return this.tokens[this.tokens.length-1]||0};Parser.prototype.parseText=function(){var body=this.token.text;
+while(this.peek().type==="text")body+="\n"+this.next().text;return this.inline.output(body)};Parser.prototype.tok=function(){switch(this.token.type){case "space":return"";case "hr":return"<hr>\n";case "heading":return"<h"+this.token.depth+">"+this.inline.output(this.token.text)+"</h"+this.token.depth+">\n";case "code":if(this.options.highlight){var code=this.options.highlight(this.token.text,this.token.lang);if(code!=null&&code!==this.token.text){this.token.escaped=true;this.token.text=code}}if(!this.token.escaped)this.token.text=
+escape(this.token.text,true);return"<pre><code"+(this.token.lang?' class="'+this.options.langPrefix+this.token.lang+'"':"")+">"+this.token.text+"</code></pre>\n";case "table":var body="",heading,i,row,cell,j;body+="<thead>\n<tr>\n";for(i=0;i<this.token.header.length;i++){heading=this.inline.output(this.token.header[i]);body+=this.token.align[i]?'<th align="'+this.token.align[i]+'">'+heading+"</th>\n":"<th>"+heading+"</th>\n"}body+="</tr>\n</thead>\n";body+="<tbody>\n";for(i=0;i<this.token.cells.length;i++){row=
+this.token.cells[i];body+="<tr>\n";for(j=0;j<row.length;j++){cell=this.inline.output(row[j]);body+=this.token.align[j]?'<td align="'+this.token.align[j]+'">'+cell+"</td>\n":"<td>"+cell+"</td>\n"}body+="</tr>\n"}body+="</tbody>\n";return"<table>\n"+body+"</table>\n";case "blockquote_start":var body="";while(this.next().type!=="blockquote_end")body+=this.tok();return"<blockquote>\n"+body+"</blockquote>\n";case "list_start":var type=this.token.ordered?"ol":"ul",body="";while(this.next().type!=="list_end")body+=
+this.tok();return"<"+type+">\n"+body+"</"+type+">\n";case "list_item_start":var body="";while(this.next().type!=="list_item_end")body+=this.token.type==="text"?this.parseText():this.tok();return"<li>"+body+"</li>\n";case "loose_item_start":var body="";while(this.next().type!=="list_item_end")body+=this.tok();return"<li>"+body+"</li>\n";case "html":return!this.token.pre&&!this.options.pedantic?this.inline.output(this.token.text):this.token.text;case "paragraph":return"<p>"+this.inline.output(this.token.text)+
+"</p>\n";case "text":return"<p>"+this.parseText()+"</p>\n"}};function escape(html,encode){return html.replace(!encode?/&(?!#?\w+;)/g:/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#39;")}function replace(regex,opt){regex=regex.source;opt=opt||"";return function self(name,val){if(!name)return new RegExp(regex,opt);val=val.source||val;val=val.replace(/(^|[^\[])\^/g,"$1");regex=regex.replace(name,val);return self}}function noop(){}noop.exec=noop;function merge(obj){var i=
+1,target,key;for(;i<arguments.length;i++){target=arguments[i];for(key in target)if(Object.prototype.hasOwnProperty.call(target,key))obj[key]=target[key]}return obj}function marked(src,opt,callback){if(callback||typeof opt==="function"){if(!callback){callback=opt;opt=null}if(opt)opt=merge({},marked.defaults,opt);var tokens=Lexer.lex(tokens,opt),highlight=opt.highlight,pending=0,l=tokens.length,i=0;if(!highlight||highlight.length<3)return callback(null,Parser.parse(tokens,opt));var done=function(){delete opt.highlight;
+var out=Parser.parse(tokens,opt);opt.highlight=highlight;return callback(null,out)};for(;i<l;i++)(function(token){if(token.type!=="code")return;pending++;return highlight(token.text,token.lang,function(err,code){if(code==null||code===token.text)return--pending||done();token.text=code;token.escaped=true;--pending||done()})})(tokens[i]);return}try{if(opt)opt=merge({},marked.defaults,opt);return Parser.parse(Lexer.lex(src,opt),opt)}catch(e){e.message+="\nPlease report this to https://github.com/chjj/marked.";
+if((opt||marked.defaults).silent)return"<p>An error occured:</p><pre>"+escape(e.message+"",true)+"</pre>";throw e;}}marked.options=marked.setOptions=function(opt){merge(marked.defaults,opt);return marked};marked.defaults={gfm:true,tables:true,breaks:false,pedantic:false,sanitize:false,smartLists:false,silent:false,highlight:null,langPrefix:""};marked.Parser=Parser;marked.parser=Parser.parse;marked.Lexer=Lexer;marked.lexer=Lexer.lex;marked.InlineLexer=InlineLexer;marked.inlineLexer=InlineLexer.output;
+marked.parse=marked;if(typeof exports==="object")module.exports=marked;else if(typeof define==="function"&&define.amd)define(function(){return marked});else this.marked=marked}).call(function(){return this||(typeof window!=="undefined"?window:global)}());
+
+/**
+ * The reveal.js 3.0.0 markdown plugin. Handles parsing of
  * markdown inside of presentations as well as loading
  * of external markdown documents.
  */
-(function( root, factory ) {
-	if( typeof exports === 'object' ) {
-		module.exports = factory( require( './marked' ) );
-	}
-	else {
-		// Browser globals (root is window)
-		root.RevealMarkdown = factory( root.marked );
-		root.RevealMarkdown.initialize();
-	}
-}( this, function( marked ) {
-
-	if( typeof marked === 'undefined' ) {
-		throw 'The reveal.js Markdown plugin requires marked to be loaded';
-	}
-
-	if( typeof hljs !== 'undefined' ) {
-		marked.setOptions({
-			highlight: function( lang, code ) {
-				return hljs.highlightAuto( lang, code ).value;
-			}
-		});
-	}
-
-	var DEFAULT_SLIDE_SEPARATOR = '^\n---\n$',
-		DEFAULT_NOTES_SEPARATOR = 'note:',
-		DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR = '\\\.element\\\s*?(.+?)$',
-		DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR = '\\\.slide:\\\s*?(\\\S.+?)$';
-
-
-	/**
-	 * Retrieves the markdown contents of a slide section
-	 * element. Normalizes leading tabs/whitespace.
-	 */
-	function getMarkdownFromSlide( section ) {
-
-		var template = section.querySelector( 'script' );
-
-		// strip leading whitespace so it isn't evaluated as code
-		var text = ( template || section ).textContent;
-
-		var leadingWs = text.match( /^\n?(\s*)/ )[1].length,
-			leadingTabs = text.match( /^\n?(\t*)/ )[1].length;
-
-		if( leadingTabs > 0 ) {
-			text = text.replace( new RegExp('\\n?\\t{' + leadingTabs + '}','g'), '\n' );
-		}
-		else if( leadingWs > 1 ) {
-			text = text.replace( new RegExp('\\n? {' + leadingWs + '}'), '\n' );
-		}
-
-		return text;
-
-	}
-
-	/**
-	 * Given a markdown slide section element, this will
-	 * return all arguments that aren't related to markdown
-	 * parsing. Used to forward any other user-defined arguments
-	 * to the output markdown slide.
-	 */
-	function getForwardedAttributes( section ) {
-
-		var attributes = section.attributes;
-		var result = [];
-
-		for( var i = 0, len = attributes.length; i < len; i++ ) {
-			var name = attributes[i].name,
-				value = attributes[i].value;
-
-			// disregard attributes that are used for markdown loading/parsing
-			if( /data\-(markdown|separator|vertical|notes)/gi.test( name ) ) continue;
-
-			if( value ) {
-				result.push( name + '=' + value );
-			}
-			else {
-				result.push( name );
-			}
-		}
-
-		return result.join( ' ' );
-
-	}
-
-	/**
-	 * Inspects the given options and fills out default
-	 * values for what's not defined.
-	 */
-	function getSlidifyOptions( options ) {
-
-		options = options || {};
-		options.separator = options.separator || DEFAULT_SLIDE_SEPARATOR;
-		options.notesSeparator = options.notesSeparator || DEFAULT_NOTES_SEPARATOR;
-		options.attributes = options.attributes || '';
-
-		return options;
-
-	}
-
-	/**
-	 * Helper function for constructing a markdown slide.
-	 */
-	function createMarkdownSlide( content, options ) {
-
-		options = getSlidifyOptions( options );
-
-		var notesMatch = content.split( new RegExp( options.notesSeparator, 'mgi' ) );
-
-		if( notesMatch.length === 2 ) {
-			content = notesMatch[0] + '<aside class="notes" data-markdown>' + notesMatch[1].trim() + '</aside>';
-		}
-
-		return '<script type="text/template">' + content + '</script>';
-
-	}
-
-	/**
-	 * Parses a data string into multiple slides based
-	 * on the passed in separator arguments.
-	 */
-	function slidify( markdown, options ) {
-
-		options = getSlidifyOptions( options );
-
-		var separatorRegex = new RegExp( options.separator + ( options.verticalSeparator ? '|' + options.verticalSeparator : '' ), 'mg' ),
-			horizontalSeparatorRegex = new RegExp( options.separator );
-
-		var matches,
-			lastIndex = 0,
-			isHorizontal,
-			wasHorizontal = true,
-			content,
-			sectionStack = [];
-
-		// iterate until all blocks between separators are stacked up
-		while( matches = separatorRegex.exec( markdown ) ) {
-			notes = null;
-
-			// determine direction (horizontal by default)
-			isHorizontal = horizontalSeparatorRegex.test( matches[0] );
-
-			if( !isHorizontal && wasHorizontal ) {
-				// create vertical stack
-				sectionStack.push( [] );
-			}
-
-			// pluck slide content from markdown input
-			content = markdown.substring( lastIndex, matches.index );
-
-			if( isHorizontal && wasHorizontal ) {
-				// add to horizontal stack
-				sectionStack.push( content );
-			}
-			else {
-				// add to vertical stack
-				sectionStack[sectionStack.length-1].push( content );
-			}
-
-			lastIndex = separatorRegex.lastIndex;
-			wasHorizontal = isHorizontal;
-		}
-
-		// add the remaining slide
-		( wasHorizontal ? sectionStack : sectionStack[sectionStack.length-1] ).push( markdown.substring( lastIndex ) );
-
-		var markdownSections = '';
-
-		// flatten the hierarchical stack, and insert <section data-markdown> tags
-		for( var i = 0, len = sectionStack.length; i < len; i++ ) {
-			// vertical
-			if( sectionStack[i] instanceof Array ) {
-				markdownSections += '<section '+ options.attributes +'>';
-
-				sectionStack[i].forEach( function( child ) {
-					markdownSections += '<section data-markdown>' +  createMarkdownSlide( child, options ) + '</section>';
-				} );
-
-				markdownSections += '</section>';
-			}
-			else {
-				markdownSections += '<section '+ options.attributes +' data-markdown>' + createMarkdownSlide( sectionStack[i], options ) + '</section>';
-			}
-		}
-
-		return markdownSections;
-
-	}
-
-	/**
-	 * Parses any current data-markdown slides, splits
-	 * multi-slide markdown into separate sections and
-	 * handles loading of external markdown.
-	 */
-	function processSlides() {
-
-		var sections = document.querySelectorAll( '[data-markdown]'),
-			section;
-
-		for( var i = 0, len = sections.length; i < len; i++ ) {
-
-			section = sections[i];
-
-			if( section.getAttribute( 'data-markdown' ).length ) {
-
-				var xhr = new XMLHttpRequest(),
-					url = section.getAttribute( 'data-markdown' );
-
-				datacharset = section.getAttribute( 'data-charset' );
-
-				// see https://developer.mozilla.org/en-US/docs/Web/API/element.getAttribute#Notes
-				if( datacharset != null && datacharset != '' ) {
-					xhr.overrideMimeType( 'text/html; charset=' + datacharset );
-				}
-
-				xhr.onreadystatechange = function() {
-					if( xhr.readyState === 4 ) {
-						// file protocol yields status code 0 (useful for local debug, mobile applications etc.)
-						if ( ( xhr.status >= 200 && xhr.status < 300 ) || xhr.status === 0 ) {
-
-							section.outerHTML = slidify( xhr.responseText, {
-								separator: section.getAttribute( 'data-separator' ),
-								verticalSeparator: section.getAttribute( 'data-separator-vertical' ),
-								notesSeparator: section.getAttribute( 'data-separator-notes' ),
-								attributes: getForwardedAttributes( section )
-							});
-
-						}
-						else {
-
-							section.outerHTML = '<section data-state="alert">' +
-								'ERROR: The attempt to fetch ' + url + ' failed with HTTP status ' + xhr.status + '.' +
-								'Check your browser\'s JavaScript console for more details.' +
-								'<p>Remember that you need to serve the presentation HTML from a HTTP server.</p>' +
-								'</section>';
-
-						}
-					}
-				};
-
-				xhr.open( 'GET', url, false );
-
-				try {
-					xhr.send();
-				}
-				catch ( e ) {
-					alert( 'Failed to get the Markdown file ' + url + '. Make sure that the presentation and the file are served by a HTTP server and the file can be found there. ' + e );
-				}
-
-			}
-			else if( section.getAttribute( 'data-separator' ) || section.getAttribute( 'data-separator-vertical' ) || section.getAttribute( 'data-separator-notes' ) ) {
-
-				section.outerHTML = slidify( getMarkdownFromSlide( section ), {
-					separator: section.getAttribute( 'data-separator' ),
-					verticalSeparator: section.getAttribute( 'data-separator-vertical' ),
-					notesSeparator: section.getAttribute( 'data-separator-notes' ),
-					attributes: getForwardedAttributes( section )
-				});
-
-			}
-			else {
-				section.innerHTML = createMarkdownSlide( getMarkdownFromSlide( section ) );
-			}
-		}
-
-	}
-
-	/**
-	 * Check if a node value has the attributes pattern.
-	 * If yes, extract it and add that value as one or several attributes
-	 * the the terget element.
-	 *
-	 * You need Cache Killer on Chrome to see the effect on any FOM transformation
-	 * directly on refresh (F5)
-	 * http://stackoverflow.com/questions/5690269/disabling-chrome-cache-for-website-development/7000899#answer-11786277
-	 */
-	function addAttributeInElement( node, elementTarget, separator ) {
-
-		var mardownClassesInElementsRegex = new RegExp( separator, 'mg' );
-		var mardownClassRegex = new RegExp( "([^\"= ]+?)=\"([^\"=]+?)\"", 'mg' );
-		var nodeValue = node.nodeValue;
-		if( matches = mardownClassesInElementsRegex.exec( nodeValue ) ) {
-
-			var classes = matches[1];
-			nodeValue = nodeValue.substring( 0, matches.index ) + nodeValue.substring( mardownClassesInElementsRegex.lastIndex );
-			node.nodeValue = nodeValue;
-			while( matchesClass = mardownClassRegex.exec( classes ) ) {
-				elementTarget.setAttribute( matchesClass[1], matchesClass[2] );
-			}
-			return true;
-		}
-		return false;
-	}
-
-	/**
-	 * Add attributes to the parent element of a text node,
-	 * or the element of an attribute node.
-	 */
-	function addAttributes( section, element, previousElement, separatorElementAttributes, separatorSectionAttributes ) {
-
-		if ( element != null && element.childNodes != undefined && element.childNodes.length > 0 ) {
-			previousParentElement = element;
-			for( var i = 0; i < element.childNodes.length; i++ ) {
-				childElement = element.childNodes[i];
-				if ( i > 0 ) {
-					j = i - 1;
-					while ( j >= 0 ) {
-						aPreviousChildElement = element.childNodes[j];
-						if ( typeof aPreviousChildElement.setAttribute == 'function' && aPreviousChildElement.tagName != "BR" ) {
-							previousParentElement = aPreviousChildElement;
-							break;
-						}
-						j = j - 1;
-					}
-				}
-				parentSection = section;
-				if( childElement.nodeName ==  "section" ) {
-					parentSection = childElement ;
-					previousParentElement = childElement ;
-				}
-				if ( typeof childElement.setAttribute == 'function' || childElement.nodeType == Node.COMMENT_NODE ) {
-					addAttributes( parentSection, childElement, previousParentElement, separatorElementAttributes, separatorSectionAttributes );
-				}
-			}
-		}
-
-		if ( element.nodeType == Node.COMMENT_NODE ) {
-			if ( addAttributeInElement( element, previousElement, separatorElementAttributes ) == false ) {
-				addAttributeInElement( element, section, separatorSectionAttributes );
-			}
-		}
-	}
-
-	/**
-	 * Converts any current data-markdown slides in the
-	 * DOM to HTML.
-	 */
-	function convertSlides() {
-
-		var sections = document.querySelectorAll( '[data-markdown]');
-
-		for( var i = 0, len = sections.length; i < len; i++ ) {
-
-			var section = sections[i];
-
-			// Only parse the same slide once
-			if( !section.getAttribute( 'data-markdown-parsed' ) ) {
-
-				section.setAttribute( 'data-markdown-parsed', true )
-
-				var notes = section.querySelector( 'aside.notes' );
-				var markdown = getMarkdownFromSlide( section );
-
-				section.innerHTML = marked( markdown );
-				addAttributes( 	section, section, null, section.getAttribute( 'data-element-attributes' ) ||
-								section.parentNode.getAttribute( 'data-element-attributes' ) ||
-								DEFAULT_ELEMENT_ATTRIBUTES_SEPARATOR,
-								section.getAttribute( 'data-attributes' ) ||
-								section.parentNode.getAttribute( 'data-attributes' ) ||
-								DEFAULT_SLIDE_ATTRIBUTES_SEPARATOR);
-
-				// If there were notes, we need to re-add them after
-				// having overwritten the section's HTML
-				if( notes ) {
-					section.appendChild( notes );
-				}
-
-			}
-
-		}
-
-	}
-
-	// API
-	return {
-
-		initialize: function() {
-			processSlides();
-			convertSlides();
-		},
-
-		// TODO: Do these belong in the API?
-		processSlides: processSlides,
-		convertSlides: convertSlides,
-		slidify: slidify
-
-	};
-
-}));
+!function(t,e){"object"==typeof exports?module.exports=e(require("./marked")):(t.RevealMarkdown=e(t.marked),t.RevealMarkdown.initialize())}(this,function(t){function e(t){var e=t.querySelector("script"),a=(e||t).textContent,r=a.match(/^\n?(\s*)/)[1].length,n=a.match(/^\n?(\t*)/)[1].length;return n>0?a=a.replace(new RegExp("\\n?\\t{"+n+"}","g"),"\n"):r>1&&(a=a.replace(new RegExp("\\n? {"+r+"}"),"\n")),a}function a(t){for(var e=t.attributes,a=[],r=0,n=e.length;n>r;r++){var i=e[r].name,o=e[r].value;/data\-(markdown|separator|vertical|notes)/gi.test(i)||a.push(o?i+"="+o:i)}return a.join(" ")}function r(t){return t=t||{},t.separator=t.separator||u,t.notesSeparator=t.notesSeparator||c,t.attributes=t.attributes||"",t}function n(t,e){e=r(e);var a=t.split(new RegExp(e.notesSeparator,"mgi"));return 2===a.length&&(t=a[0]+'<aside class="notes" data-markdown>'+a[1].trim()+"</aside>"),'<script type="text/template">'+t+"</script>"}function i(t,e){e=r(e);for(var a,i,o,s=new RegExp(e.separator+(e.verticalSeparator?"|"+e.verticalSeparator:""),"mg"),d=new RegExp(e.separator),l=0,u=!0,c=[];a=s.exec(t);)notes=null,i=d.test(a[0]),!i&&u&&c.push([]),o=t.substring(l,a.index),i&&u?c.push(o):c[c.length-1].push(o),l=s.lastIndex,u=i;(u?c:c[c.length-1]).push(t.substring(l));for(var p="",h=0,m=c.length;m>h;h++)c[h]instanceof Array?(p+="<section "+e.attributes+">",c[h].forEach(function(t){p+="<section data-markdown>"+n(t,e)+"</section>"}),p+="</section>"):p+="<section "+e.attributes+" data-markdown>"+n(c[h],e)+"</section>";return p}function o(){for(var t,r=document.querySelectorAll("[data-markdown]"),o=0,s=r.length;s>o;o++)if(t=r[o],t.getAttribute("data-markdown").length){var d=new XMLHttpRequest,l=t.getAttribute("data-markdown");datacharset=t.getAttribute("data-charset"),null!=datacharset&&""!=datacharset&&d.overrideMimeType("text/html; charset="+datacharset),d.onreadystatechange=function(){4===d.readyState&&(t.outerHTML=d.status>=200&&d.status<300||0===d.status?i(d.responseText,{separator:t.getAttribute("data-separator"),verticalSeparator:t.getAttribute("data-separator-vertical"),notesSeparator:t.getAttribute("data-separator-notes"),attributes:a(t)}):'<section data-state="alert">ERROR: The attempt to fetch '+l+" failed with HTTP status "+d.status+".Check your browser's JavaScript console for more details.<p>Remember that you need to serve the presentation HTML from a HTTP server.</p></section>")},d.open("GET",l,!1);try{d.send()}catch(u){alert("Failed to get the Markdown file "+l+". Make sure that the presentation and the file are served by a HTTP server and the file can be found there. "+u)}}else t.getAttribute("data-separator")||t.getAttribute("data-separator-vertical")||t.getAttribute("data-separator-notes")?t.outerHTML=i(e(t),{separator:t.getAttribute("data-separator"),verticalSeparator:t.getAttribute("data-separator-vertical"),notesSeparator:t.getAttribute("data-separator-notes"),attributes:a(t)}):t.innerHTML=n(e(t))}function s(t,e,a){var r=new RegExp(a,"mg"),n=new RegExp('([^"= ]+?)="([^"=]+?)"',"mg"),i=t.nodeValue;if(matches=r.exec(i)){var o=matches[1];for(i=i.substring(0,matches.index)+i.substring(r.lastIndex),t.nodeValue=i;matchesClass=n.exec(o);)e.setAttribute(matchesClass[1],matchesClass[2]);return!0}return!1}function d(t,e,a,r,n){if(null!=e&&void 0!=e.childNodes&&e.childNodes.length>0){previousParentElement=e;for(var i=0;i<e.childNodes.length;i++){if(childElement=e.childNodes[i],i>0)for(j=i-1;j>=0;){if(aPreviousChildElement=e.childNodes[j],"function"==typeof aPreviousChildElement.setAttribute&&"BR"!=aPreviousChildElement.tagName){previousParentElement=aPreviousChildElement;break}j-=1}parentSection=t,"section"==childElement.nodeName&&(parentSection=childElement,previousParentElement=childElement),("function"==typeof childElement.setAttribute||childElement.nodeType==Node.COMMENT_NODE)&&d(parentSection,childElement,previousParentElement,r,n)}}e.nodeType==Node.COMMENT_NODE&&0==s(e,a,r)&&s(e,t,n)}function l(){for(var a=document.querySelectorAll("[data-markdown]"),r=0,n=a.length;n>r;r++){var i=a[r];if(!i.getAttribute("data-markdown-parsed")){i.setAttribute("data-markdown-parsed",!0);var o=i.querySelector("aside.notes"),s=e(i);i.innerHTML=t(s),d(i,i,null,i.getAttribute("data-element-attributes")||i.parentNode.getAttribute("data-element-attributes")||p,i.getAttribute("data-attributes")||i.parentNode.getAttribute("data-attributes")||h),o&&i.appendChild(o)}}}if("undefined"==typeof t)throw"The reveal.js Markdown plugin requires marked to be loaded";"undefined"!=typeof hljs&&t.setOptions({highlight:function(t,e){return hljs.highlightAuto(t,e).value}});var u="^\n---\n$",c="note:",p="\\.element\\s*?(.+?)$",h="\\.slide:\\s*?(\\S.+?)$";return{initialize:function(){o(),l()},processSlides:o,convertSlides:l,slidify:i}});

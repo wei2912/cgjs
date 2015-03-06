@@ -72,24 +72,24 @@ function highlight() {
 	}
 
 	function clearPreviousHighlights() {
-		forEach(currentSlide.querySelectorAll('pre code .line.highlight'), function(line) {
-			line.classList.remove('highlight');
+		forEach(currentSlide.querySelectorAll('pre code .line.focus'), function(line) {
+			line.classList.remove('focus');
 		});
 	}
 
 	function highlightFragment(fragment) {
 		clearPreviousHighlights();
-		var lines = fragment.getAttribute('data-code-highlight');
+		var lines = fragment.getAttribute('data-code-focus');
 		if (lines) {
 			lines = lines.split('-');
 			var code = currentSlide.querySelectorAll('pre code .line');
 			if (lines.length == 1) {
-				code[lines[0] - 1].classList.add('highlight');
+				code[lines[0] - 1].classList.add('focus');
 			} else {
 				var i = lines[0], j = lines[1];
 				i--;
 				while (++i <= j) {
-					code[i - 1].classList.add('highlight');
+					code[i - 1].classList.add('focus');
 				}
 			}
 		}
