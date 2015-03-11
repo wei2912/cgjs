@@ -27,20 +27,20 @@
 	<body>
 		<div class="reveal">
 		<div class="slides">
-			<section data-markdown>
+			<section data-markdown><script type="text/template">
 				# Tic-Tac-Toe (Logic)
 
 				Lesson 3 of [Creating Games with JavaScript](http://git.io/cgjs-15).
 
 				Benjamin Tan | Ng Wei En
-			</section>
+			</script></section>
 
 			<section>
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					# Arrays
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Arrays
 
 					 * Objects
@@ -48,9 +48,9 @@
 					 * Use zero-based indices to access elements
 					   - First element → 0
 					   - Second element → 1
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Creating Arrays
 
 					```js
@@ -59,9 +59,9 @@
 					// array literal
 					var array2 = ['one', 'two'];
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Array Elements
 
 					```js
@@ -76,9 +76,9 @@
 					// last element
 					array[array.length - 1];
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Arrays (Demo)
 
 					```js
@@ -92,9 +92,9 @@
 					array[0] = 'hi';
 					array; // ['hi', 'world'];
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `Array#push`
 
 					```js
@@ -105,27 +105,27 @@
 
 					array; // ['hello', 'world', 'again']
 					```
-				</section>
+				</script></section>
 			</section>
 
 			<section>
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					# Custom Objects
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Custom Objects
 
 					How do ‘Array’ objects get custom methods like ‘Array.push’?
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Prototyping
 
 					Objects’ prototypes allow you to extend them with custom methods and properties that’ll be available every time you create a new instance of an object (unlike declaring functions directly, which only exist on the current object and not on future instances).
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Customizing Arrays
 
 					```js
@@ -141,21 +141,21 @@
 					[].addAwesome();
 					// ['awesome!']
 					```
-				</section>
+				</script></section>
 			</section>
 
 			<section>
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					# Tic Tac Toe
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Tic-Tac-Toe (Demo)
 
 					...
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Components
 
 					Two components to our Tic Tac Toe game:
@@ -164,9 +164,9 @@
 					2. User Interface (UI)
 
 					Today, we focus on the backend.
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## API — Properties
 
 					```js
@@ -178,9 +178,9 @@
 					]; // to be covered soon!
 					gridSize = 3;
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## API — Functions
 
 					```js
@@ -188,25 +188,25 @@
 					move(i, j);
 					isWin();
 					```
-				</section>
+				</script>/section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `TicTacToe()`
 
 					This is the object constructor.
 
 					We just need to initialize the values as according to our slide about our object’s properties.
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `move(i, j)`
 
 					This function makes a move at `(i, j)` on the grid.
 
 					In programming, we make use of what we call “two-dimensional” arrays to create the grid.
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `grid`
 
 					Back to the definition:
@@ -220,9 +220,9 @@
 					```
 
 					The grid is defined as an array of arrays (which we take to be rows).
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Rows
 
 					One of the basic operations is to iterate through the grid, so we’re going to do that.
@@ -235,9 +235,9 @@
 					  // ...
 					}
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Columns
 
 					...and iterate through the columns of the row.
@@ -251,9 +251,9 @@
 					  }
 					}
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Accessing a cell given `(i, j)`
 
 					In the previous slides, `i` was the row index and `j` was the column index. It follows that to access a cell, we can do this:
@@ -267,9 +267,9 @@
 					```js
 					grid[i][j] = "hi";
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `move(i, j)`
 
 					What should `move(i, j)` do?
@@ -278,12 +278,12 @@
 					2. Change to the next player
 
 					It’s hard to keep track of what is happening, so let’s look at what happens when we run the function.
-				</section>
+				</script></section>
 			</section>
 
-			<section data-markdown>
+			<section data-markdown><script type="text/template">
 				# Fin.
-			</section>
+			</script></section>
 		</div>
 		</div>
 
