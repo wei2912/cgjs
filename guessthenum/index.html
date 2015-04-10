@@ -598,9 +598,14 @@
 				history: true,
 				center: true,
 				transition: 'slide',
+				math: {
+					katexScript: '../resources/math-katex/katex.min.js',
+					katexStylesheet: '../resources/math-katex/katex.min.css'
+				},
 				dependencies: [
 					{ src: '../resources/slides/js/classList.js', condition: function() { return !document.body.classList; } },
 					{ src: '../resources/slides/js/markdown.js' },
+					{ src: '../resources/math-katex/math-katex.js' },
 					{ src: '../resources/slides/js/highlight.js', callback: function() { hljs.initHighlightingOnLoad(); } },
 					{ src: '../resources/slides/js/zoom.js', async: true },
 					{ src: '../resources/slides/js/notes.js', async: true }
