@@ -1,4 +1,9 @@
-function highlight() {
+/*!
+ * reveal-code-focus
+ * Copyright 2015 Benjamin Tan <https://d10.github.io/>
+ * Available under MIT license <https://github.com/d10/reveal-code-focus/blob/gh-pages/LICENSE.txt>
+ */
+window.RevealCodeFocus || (window.RevealCodeFocus = function (Reveal) {
 	var currentSlide, currentFragments, prevSlideData = null;
 
 	var forEach = function(array, callback) {
@@ -8,12 +13,7 @@ function highlight() {
 		}
 	};
 
-	Reveal.addEventListener('ready', function(e) {
-		updateCurrent(e);
-		init();
-	});
-
-	function init() {
+	function init(e) {
 		var hljs_nodes = document.querySelectorAll('pre code');
 
 		for (var i = 0, len = hljs_nodes.length; i < len; i++) {
@@ -64,6 +64,8 @@ function highlight() {
 				highlightFragment(currentFragments[i - 1]);
 			}
 		});
+
+		updateCurrent(e);
 	}
 
 	function updateCurrent(e) {
@@ -95,17 +97,33 @@ function highlight() {
 		clearPreviousHighlights();
 		var lines = fragment.getAttribute('data-code-focus');
 		if (lines) {
-			lines = lines.split('-');
 			var code = currentSlide.querySelectorAll('pre code .line');
-			if (lines.length == 1) {
-				code[lines[0] - 1].classList.add('focus');
-			} else {
-				var i = lines[0], j = lines[1];
-				i--;
-				while (++i <= j) {
-					code[i - 1].classList.add('focus');
+			lines = lines.split(',');
+			forEach(lines, function(line) {
+				lines = line.split('-');
+				if (lines.length == 1) {
+					code[lines[0] - 1].classList.add('focus');
+				} else {
+					var i = lines[0], j = lines[1];
+					i--;
+					while (++i <= j) {
+						code[i - 1].classList.add('focus');
+					}
 				}
-			}
+			})
 		}
 	}
-}
+
+	function codeFocus() {
+		if (Reveal.isReady()) {
+			init({ currentSlide: Reveal.getCurrentSlide() });
+			return;
+		}
+
+		Reveal.addEventListener('ready', function(e) {
+			init(e);
+		});
+	}
+
+	return codeFocus;
+}(Reveal));
