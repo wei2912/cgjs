@@ -65,6 +65,9 @@
 					  alert('number is less than 10');
 					}
 					```
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="5"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -77,7 +80,6 @@
 					  "statements to be processed if condition is falsey";
 					}
 					```
-					<span class="fragment" data-code-focus="3-5"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -92,6 +94,10 @@
 					  alert('number is 10 or greater');
 					}
 					```
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="4"></span>
+					<span class="fragment" data-code-focus="7"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -108,7 +114,11 @@
 					  alert('number is 20 or greater');
 					}
 					```
-					<span class="fragment" data-code-focus="5-7"></span>
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="5"></span>
+					<span class="fragment" data-code-focus="6"></span>
+					<span class="fragment" data-code-focus="9"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -143,17 +153,13 @@
 					    break; // optional
 					}
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="2-4"></span>
-					<span class="fragment" data-code-focus="5-6"></span>
-					<span class="fragment" data-code-focus="9-11"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
 					## `switch`
 				
 					```js
-					var abbreviation /* = ... */, name;
+					var abbreviation = 'unnamed', name;
 					switch (abbreviation) {
 					  case 'wei2912':
 					    name = 'Ng Wei En';
@@ -167,6 +173,13 @@
 					    break;
 					}
 					```
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="2"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="6"></span>
+					<span class="fragment" data-code-focus="7"></span>
+					<span class="fragment" data-code-focus="10"></span>
+					<span class="fragment" data-code-focus="11-12"></span>
 				</script></section>
 			</section>
 
@@ -403,8 +416,6 @@
 					  'y': 'Hello2'
 					};
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="4-5"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -421,8 +432,10 @@
 
 					object.nonExistentKey; // undefined
 					```
+					<span class="fragment" data-code-focus="1"></span>
 					<span class="fragment" data-code-focus="3-4"></span>
-					<span class="fragment" data-code-focus="6-7"></span>
+					<span class="fragment" data-code-focus="6"></span>
+					<span class="fragment" data-code-focus="7"></span>
 					<span class="fragment" data-code-focus="9"></span>
 				</script></section>
 
@@ -436,8 +449,6 @@
 
 					object == object; // true
 					```
-					<span class="fragment" data-code-focus="3"></span>
-					<span class="fragment" data-code-focus="5"></span>
 				</script></section>
 			</section>
 
@@ -466,8 +477,6 @@
 
 					sayHi('Benjamin');
 					```
-					<span class="fragment" data-code-focus="2"></span>
-
 					**Important:** Function declarations **cannot** be used reliably in branches/loops.
 				</script></section>
 
@@ -482,8 +491,6 @@
 
 					sayHi('Jared');
 					```
-					<span class="fragment" data-code-focus="2"></span>
-
 					Function expressions **can** be used reliably in branches/loops.
 				</script></section>
 
@@ -501,7 +508,10 @@
 					```
 					<span class="fragment" data-code-focus="1"></span>
 					<span class="fragment" data-code-focus="6"></span>
-					<span class="fragment" data-code-focus="3-4"></span>
+					<span class="fragment" data-code-focus="2"></span>
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="4"></span>
+					<span class="fragment" data-code-focus="5"></span>
 					<span class="fragment" data-code-focus="7"></span>
 				</script></section>
 
@@ -519,17 +529,18 @@
 
 					sayHi('Wei En'); // 'Hi Wei En!'
 					```
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="1"></span>
+					<span class="fragment" data-code-focus="9"></span>
+					<span class="fragment" data-code-focus="5"></span>
 					<span class="fragment" data-code-focus="6"></span>
 					<span class="fragment" data-code-focus="9"></span>
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="3"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
 					## Arguments
 
-					 * Primitives are passed into functions as values
-					 * Objects are passed into functions by reference
+					You can pass in both primitives and objects into functions.
 				</script></section>
 				
 				<section data-markdown><script type="text/template">
@@ -548,7 +559,8 @@
 					console.log(number); // 10
 					console.log(object.x); // 'x'
 					```
-					<span class="fragment" data-code-focus="4,9"></span>
+					<span class="fragment" data-code-focus="1-2"></span>
+					<span class="fragment" data-code-focus="9,4-7"></span>
 					<span class="fragment" data-code-focus="5,10"></span>
 					<span class="fragment" data-code-focus="6,11"></span>
 				</script></section>
@@ -652,6 +664,8 @@
 
 			<section data-markdown><script type="text/template">
 				## Exercises
+
+				This week's exercises are actually fun.
 
 				[git.io/pmZ0](http://git.io/pmZ0)
 			</script></section>
