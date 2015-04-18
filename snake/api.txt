@@ -5,5 +5,5 @@ Snake(n); // Object constructor. Takes in n, size of square grid.
 direction; // 0 - up, 1 - right, 2 - down, 3 - left.
 grid; // grid of stuff. null is nothing, 'X' is snake body, 'O' is food.
 snake; // a FIFO queue of locations of the snake body. upon every step, pop from end, push to front.
-step(); // Moves the snake forward in the current direction. Checks if food is eaten or the snake eats itself.
+step(); // Moves the snake forward in the current direction. Checks if food is eaten, the snake eats itself or hits the wall. Returns false if the snake dies.
 setDirection(direction); // Set the current direction.
