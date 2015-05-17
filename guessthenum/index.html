@@ -34,14 +34,6 @@
 
 			<section>
 				<section data-markdown><script type="text/template">
-					# “Hello, World!”: Exercises
-
-					Let’s take a look at your work.
-				</script></section>
-			</section>
-
-			<section>
-				<section data-markdown><script type="text/template">
 					# Branches
 				</script></section>
 
@@ -67,6 +59,7 @@
 					```
 					<span class="fragment" data-code-focus="1"></span>
 					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="4"></span>
 					<span class="fragment" data-code-focus="5"></span>
 				</script></section>
 
@@ -181,9 +174,6 @@
 					  statements;
 					}
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="2"></span>
-
 
 					1. If `condition` is truthy, proceed to step 2. Otherwise, end the loop.
 					2. Execute `statements`.
@@ -196,17 +186,25 @@
 					## `while`
 
 					```js
-					// declare variables first
-					var i = 1, noOfTimes = 10;
+					var i = 1, noOfTimes = 3;
 
 					while (i <= noOfTimes) {
 					  alert("Alert no. " + i);
 					  ++i;
 					}
 					```
-					<span class="fragment" data-code-focus="4"></span>
-					<span class="fragment" data-code-focus="5"></span>
+					<span class="fragment current-visible" data-code-focus="1">i = 1</span>
+					<span class="fragment current-visible" data-code-focus="3">i = 1</span>
+					<span class="fragment current-visible" data-code-focus="4">Alert no. 1</span>
+					<span class="fragment current-visible" data-code-focus="5">i = 2</span>
+					<span class="fragment current-visible" data-code-focus="3">i = 2</span>
+					<span class="fragment current-visible" data-code-focus="4">Alert no. 2</span>
+					<span class="fragment current-visible" data-code-focus="5">i = 3</span>
+					<span class="fragment current-visible" data-code-focus="3">i = 3</span>
+					<span class="fragment current-visible" data-code-focus="4">Alert no. 3</span>
+					<span class="fragment current-visible" data-code-focus="5">i = 4</span>
 					<span class="fragment" data-code-focus="6"></span>
+
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -630,7 +628,7 @@
 			<section data-markdown><script type="text/template">
 				## Exercises
 
-				This week's exercises are actually fun.
+				This week's exercises should be fun.
 
 				[git.io/pmZ0](http://git.io/pmZ0)
 			</script></section>
