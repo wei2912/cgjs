@@ -200,17 +200,9 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `move(i, j)`
-
-					This function makes a move at `(i, j)` on the grid.
-
-					In programming, we make use of what we call “two-dimensional” arrays to create the grid.
-				</script></section>
-
-				<section data-markdown><script type="text/template">
 					## `grid`
 
-					Back to the definition:
+					Back to the definition of a grid:
 
 					```js
 					grid = [
@@ -255,7 +247,7 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## Accessing a cell given `(i, j)`
+					## Accessing a cell given `i` and `j`
 
 					In the previous slides, `i` was the row index and `j` was the column index. It follows that to access a cell, we can do this:
 
@@ -276,9 +268,20 @@
 					What should `move(i, j)` do?
 
 					1. Set a cell to the current player
-					2. Change to the next player
+					2. Change the current player to the next player
 
-					It’s hard to keep track of what is happening, so let’s look at what happens when we run the function.
+					If it turns out that the cell is already occupied, the function should shout at us. This requires exceptions.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## `move(i, j)`
+
+					What should `move(i, j)` do?
+
+					1. Set a cell to the current player
+					2. Change the current player to the next player
+
+					If it turns out that the cell is already occupied, the function should shout at us. This requires exceptions.
 				</script></section>
 			</section>
 
