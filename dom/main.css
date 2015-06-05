@@ -1,0 +1,134 @@
+/* Base settings */
+html {
+  padding: 0;
+  margin: 0;
+  font: 100% Helvetica Neue Light, Helvetica Neue, Helvetica, Arial, sans-serif;
+}
+
+body {
+  padding: 10px;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Simple reset of styles */
+tr, td, td:after, #status {
+  padding: 0;
+  margin: 0;
+}
+
+/* Header */
+header {
+  position: relative;
+}
+
+/* Tic-Tac-Toe logo */
+h1 {
+  text-align: center;
+}
+
+/* Player X and O icons */
+#icons {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+#icons:before, #icons:after {
+  content: " ";
+  display: table;
+}
+
+#icons:after {
+  clear: both;
+}
+
+#player-x, #player-o {
+  font-size: 1.5em;
+  display: inline-block;
+  color: black;
+}
+
+#player-x {
+  float: left;
+}
+
+#player-o {
+  float: right;
+}
+
+.selected {
+  color: orange !important;
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+/* Container for grid and status elements */
+#container {
+  position: relative;
+  height: 302px;
+  width: 302px;
+  margin: 30px auto;
+}
+
+/* Grid */
+#grid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  border-collapse: collapse;
+}
+
+/* Grid rows */
+#grid tr {
+  border-bottom: 1px solid black;
+}
+
+#grid tr:last-child {
+  border-bottom: 0;
+}
+
+.player-x {
+  color: red;
+}
+
+.player-o {
+  color: black;
+}
+
+/* Grid cells */
+td {
+  font-size: 1.5em;
+  text-align: center;
+  height: 100px;
+  width: 100px;
+  border-right: 1px solid black;
+}
+
+td:last-child {
+  border-right: 0;
+}
+
+/* Status element */
+#status {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 40%;
+  padding: 30% 0;
+  z-index: 1;
+  font-size: 2em;
+  text-align: center;
+  display: none;
+  background-color: pink;
+  opacity: 0.9;
+}
+
+#status.active {
+  display: block;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tic-Tac-Toe</title>
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <header>
+      <h1>Tic-Tac-Toe</h1>
+
+      <!-- Player icons -->
+      <div id="icons">
+        <span id="player-x">X</span>
+        <span id="player-o">O</span>
+      </div>
+    </header>
+
+    <div id="container">
+      <!-- Used to show status messages -->
+      <div id="status">hi</div>
+
+      <!-- Used as the Tic-Tac-Toe board -->
+      <table id="grid" cellspacing="0"></table>
+    </div>
+
+    <!-- Include scripts -->
+    <script src="tictactoe.js"></script>
+    <script src="ui.js"></script>
+    <script src="main.js"></script>
+    <script>
+      ui.defaultPlayer = 'X';
+      ui.gridSize = 3;
+
+      ui.start();
+    </script>
+  </body>
+</html>
