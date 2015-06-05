@@ -112,7 +112,7 @@
 				<section data-markdown><script type="text/template">
 					## Custom Objects
 
-					How do ‘Array’ objects get custom methods like ‘Array.push’?
+					How do `Array` objects get custom methods like `Array.push`?
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -138,6 +138,34 @@
 					// ['awesome!']
 					```
 				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Custom Objects
+
+					```js
+					function Person(name) {
+					  this.name = name;
+					}
+
+					var a = new Person('a');
+					a.name;
+					// 'a'
+					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Custom Objects
+
+					```js
+					// Person#speak
+					Person.prototype.speak = function(msg) {
+					  console.log(this.name + 'says: ' + msg);
+					}
+
+					a.speak('Hi!');
+					// 'a says: Hi!'
+					```
+				</script></section>
 			</section>
 
 			<section>
@@ -147,8 +175,6 @@
 
 				<section data-markdown><script type="text/template">
 					## Tic-Tac-Toe (Demo)
-
-					...
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -166,13 +192,13 @@
 					## API — Properties
 
 					```js
-					curPlayer = 'X';
-					grid = [
+					TicTacToe#curPlayer = 'X';
+					TicTacToe#grid = [
 					  [null, null, null],
 					  [null, null, null],
 					  [null, null, null]
 					]; // to be covered soon!
-					gridSize = 3;
+					TicTacToe#gridSize = 3;
 					```
 				</script></section>
 
@@ -180,15 +206,14 @@
 					## API — Functions
 
 					```js
-					TicTacToe();
-					grid;
-					isWin();
-					move(i, j);
+					TicTacToe(player, gridSize); // returns an instance of a game
+					TicTacToe#isWin();
+					TicTacToe#(i, j);
 					```
 				</script>/section>
 
 				<section data-markdown><script type="text/template">
-					## `TicTacToe()`
+					## `new TicTacToe(player, gridSize)`
 
 					This is the object constructor.
 
@@ -196,7 +221,7 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `grid`
+					## `TicTacToe#grid`
 
 					Back to the definition of a grid:
 
@@ -254,12 +279,12 @@
 					Likewise, to assign a cell to a value:
 
 					```js
-					grid[i][j] = "hi";
+					grid[i][j] = 'X';
 					```
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `move(i, j)`
+					## `TicTacToe#move(i, j)`
 
 					What should `move(i, j)` do?
 
@@ -270,7 +295,7 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `move(i, j)`
+					## `TicTacToe#move(i, j)`
 
 					What should `move(i, j)` do?
 
