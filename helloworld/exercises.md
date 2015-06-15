@@ -3,6 +3,6 @@
 This week, there will be no coding exercises. We need you to complete two courses for week 4:
 
 1. [Codecademy’s course on HTML & CSS](http://www.codecademy.com/tracks/web). You will only need to complete the “HTML Basics” section.
-2. [Mozilla Developer Network's Getting started with CSS](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started). You will only need to complete up till “8. Color”.
+2. [Mozilla Developer Network’s Getting started with CSS](https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_started). You will only need to complete up till “8. Color”.
 
 If you have knowledge of HTML and CSS, just give a quick skim through these courses to ensure that you know everything you will need.
