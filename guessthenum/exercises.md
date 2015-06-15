@@ -115,7 +115,7 @@ write a program that produces the following shape:
    ##
 ```
 
-## Tips
+### Tips
 
 Observe a pattern in:
 
