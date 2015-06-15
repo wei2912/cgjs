@@ -198,7 +198,7 @@
 					  [null, null, null],
 					  [null, null, null]
 					]; // to be covered soon!
-					TicTacToe#gridSize = 3;
+					TicTacToe#gameState = null; // to be explained
 					```
 				</script></section>
 
@@ -206,14 +206,16 @@
 					## API — Functions
 
 					```js
-					TicTacToe(player, gridSize); // returns an instance of a game
+					TicTacToe(); // returns an instance of a game
+					TicTacToe#getWinSeqs();
+					TicTacToe#isDraw();
 					TicTacToe#isWin();
-					TicTacToe#(i, j);
+					TicTacToe#move(i, j);
 					```
-				</script>/section>
+				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `new TicTacToe(player, gridSize)`
+					### `new TicTacToe()`
 
 					This is the object constructor.
 
@@ -257,14 +259,47 @@
 					...and iterate through the columns of the row.
 
 					```js
-					for (int i = 0; i < grid.length; ++i) {
+					for (var i = 0; i < grid.length; ++i) {
 					  var row = grid[i];
-					  for (int j = 0; j < row.length; ++j) {
+					  for (var j = 0; j < row.length; ++j) {
 						var cell = grid[j];
 						// ...
 					  }
 					}
 					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Example
+
+					```js
+					var grid = [
+					  [1, 2, 3],
+					  [4, 5, 6],
+					  [7, 8, 9]
+					];
+
+					for (var i = 0; i < grid.length; ++i) {
+					  var row = grid[i];
+					  for (var j = 0; j < row.length; ++j) {
+						var cell = grid[j];
+						// ...
+					  }
+					}
+					```
+
+					<span class="fragment" data-code-focus="1-5"></span>
+					<span class="fragment current-only" data-code-focus="7">`i = 0`</span>
+					<span class="fragment current-only" data-code-focus="8">`i = 0, row = [1, 2, 3]`</span>
+					<span class="fragment current-only" data-code-focus="9">`i = 0, row = [1, 2, 3], j = 0`</span>
+					<span class="fragment current-only" data-code-focus="10">`i = 0, row = [1, 2, 3], j = 0, cell = [1]`</span>
+					<span class="fragment current-only" data-code-focus="9">`i = 0, row = [1, 2, 3], j = 1, cell = [1]`</span>
+					<span class="fragment current-only" data-code-focus="10">`i = 0, row = [1, 2, 3], j = 1, cell = [2]`</span>
+					<span class="fragment current-only" data-code-focus="9">`i = 0, row = [1, 2, 3], j = 2, cell = [2]`</span>
+					<span class="fragment current-only" data-code-focus="10">`i = 0, row = [1, 2, 3], j = 2, cell = [3]`</span>
+					<span class="fragment current-only" data-code-focus="7">`i = 1, row = [1, 2, 3], j = 2, cell = [3]`</span>
+					<span class="fragment current-only" data-code-focus="8">`i = 1, row = [4, 5, 6], j = 2, cell = [3]`</span>
+					<span class="fragment current-only">and so on...</span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -284,16 +319,59 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## `TicTacToe#move(i, j)`
+					## Some helper functions
 
-					What should `move(i, j)` do?
+					For the sake of convenience (as we will see later), we will create a helper function `emptyGrid(n)` and `nextPlayer(player)` that is not part of the functions that `TicTacToe` has.
 
-					1. Set a cell to the current player
-					2. Change the current player to the next player
-
-					If it turns out that the cell is already occupied, the function should shout at us. This requires exceptions.
+					The code of these two functions are on the following slides.
 				</script></section>
 
+				<section data-markdown><script type="text/template">
+					```js
+					// Returns an empty n x n array.
+					function emptyGrid(n) {
+					  var array = Array(n);
+					  for (var i = 0; i < n; ++i) {
+					    var subarray = Array(n);
+					    for (var j = 0; j < n; ++j) {
+					      subarray[j] = null;
+					    }
+					    array[i] = subarray;
+					  }
+					  return array;
+					}
+					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					```js
+					// Given the current player, returns the next player.
+					function nextPlayer(player) {
+					  switch (player) {
+					    case 'X': return 'O';
+					    case 'O': return 'X';
+					  }
+					}
+					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Initialization of object
+
+					```js
+					function TicTacToe() {
+					  this.grid = emptyGrid(3);
+					}
+
+					TicTacToe.prototype.grid = null;
+					TicTacToe.prototype.gridSize = 3;
+					TicTacToe.prototype.curPlayer = 'X';
+					TicTacToe.prototype.gameState = null;
+					```
+				</script></section>
+			</section>
+
+			<section>
 				<section data-markdown><script type="text/template">
 					## `TicTacToe#move(i, j)`
 
@@ -302,7 +380,241 @@
 					1. Set a cell to the current player
 					2. Change the current player to the next player
 
-					If it turns out that the cell is already occupied, the function should shout at us. This requires exceptions.
+					If it turns out that the cell is out of range or already occupied, the function should shout at us. This requires exceptions.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Exceptions
+
+					Exceptions are used to shout at humans and computers when they do stupid stuff.
+
+					When we want to shout at someone, we use `throw new Error(message);`. This is called `throw`ing an exception.
+				</script></section>
+ 
+				<section data-markdown><script type="text/template">
+					## Effects of exceptions
+
+					An exception will exit from the current function and all the way up till there are no functions left.
+
+					```js
+					function a() {
+						throw new Error("derp");
+						return 'a';
+					}
+
+					function b() {
+						a();
+						return 'b';
+					}
+
+					var val = b();
+					console.log(val);
+					```
+
+					<span class="fragment current-only" data-code-focus="11">Calling `b()`...</span>
+					<span class="fragment current-only" data-code-focus="6">Running function `b()`.</span>
+					<span class="fragment current-only" data-code-focus="7">Calling `a()`...</span>
+					<span class="fragment current-only" data-code-focus="1">Running function `a()`.</span>
+					<span class="fragment current-only" data-code-focus="2">Throw exception with message `"derp"`. Exit from function `a()`.</span>
+					<span class="fragment current-only" data-code-focus="7">Back to function `b()`. Exiting.</span>
+					<span class="fragment current-only" data-code-focus="11">No more functions left. Terminating program.</span>
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Catching Exceptions
+
+					In certain scenarios, we may want to prevent the program from terminating. This is called `catch`ing the exception.
+
+					We use the clause `try...catch`.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Example
+
+					```js
+					function f() {
+						throw new Error("derp");
+						return "here's your input";
+					}
+
+					try {
+						var val = f();
+						console.log(val);
+					} catch (e) {
+						console.log("Exception caught: " + e.message); 
+					}
+					console.log("Going back to normal life");
+					```
+
+					<span class="fragment current-only" data-code-focus="7">Calling `f()`...</span>
+					<span class="fragment current-only" data-code-focus="1">Running function `f()`.</span>
+					<span class="fragment current-only" data-code-focus="2">Throw exception with message `"derp"`. Exit from function `f()`.</span>
+					<span class="fragment current-only" data-code-focus="7">Back to here. Exiting.</span>
+					<span class="fragment current-only" data-code-focus="9">Exception caught as `e`.</span>
+					<span class="fragment current-only" data-code-focus="10">`e.message = "derp"`</span>
+					<span class="fragment current-only" data-code-focus="12">Continuing on with the rest of the program.</span>
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Start writing `move`.
+
+					We will be around to help you out if you have any queries. Remember, the logic is as follows:
+
+					1. Set a cell to the current player.
+					2. Change the current player to the next player.
+
+					If the cell is out of range, the function should throw `RangeError('Cell is out of range.')`.
+
+					If the cell is already occupied, the function should throw `Error('Square is already occupied.')`.
+
+					Test your function using the console.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					### `TicTacToe#gameState`
+
+					Now, on to `gameState`. This variable contains the current state of the game, and lets us know if the game has ended as a draw or a win. This will lead on to our `isDraw` and `isWin` functions.
+
+					`gameState` can take on the following values:
+
+					* 'X' (X won the game)
+					* 'O' (O won the game)
+					* 'draw' (it's a draw)
+					* null (the game has not ended)
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					### Changing of states
+
+					To check if a player has won, use the function `isWin()`, which will return 'X' or 'O'.
+
+					To check if it's a draw, use the function `isDraw()`.
+
+					If the player neither won nor drew, leave the `gameState` as it is. It's initial value is `null`.
+				</script></section>
+			</section>
+
+			<section>
+				<section data-markdown><script type="text/template">
+					### `TicTacToe#getWinSeqs()`
+
+					`getWinSeqs()` returns all the possible winning sequences of a game.
+
+					A possible winning sequence is an arrangement of cells, such that when all of the cells are occupied with either X or O, the corresponding player wins.
+
+					What this essentially does is to return all the:
+
+					* Rows
+					* Columns
+					* Diagonals
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Rows
+
+					This is just the grid itself -- remember that we defined the grid to be an array of rows.
+
+					However, we want to make a copy of each row. The details of why we do so will not be covered.
+
+					```js
+					TicTacToe.prototype.getWinSeqs = function() {
+						var rows = Array(this.gridSize);
+						for (var i = 0; i < this.gridSize; ++i) {
+							rows[i] = this.grid[i].slice();
+						}
+					}
+					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Columns
+
+					With `for` loops, we can easily get the columns.
+
+					Notice that in `grid[i][j]`, `i` is the row index and `j` is the column index. Hence, we can create an empty grid first, then assign `cols[j][i]` to `grid[i][j]` for each value of `i` and `j`.
+
+					Add on to our current function:
+
+					```js
+					var cols = emptyGrid(this.gridSize);
+					for (var i = 0; i < this.gridSize; ++i) {
+					  for (var j = 0; j < this.gridSize; ++j) {
+					    cols[i][j] = grid[j][i];
+					  }
+					}
+					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Diagonals
+
+					There are two diagonals in a grid: forward diagonal (/) and backward diagonal (\\).
+
+					Write code to assign `fDiag` to the forward diagonal and `bDiag` to the backward diagonal.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Returning the possible winning sequences
+
+					```js
+					return rows.concat(cols).concat([fDiag, bDiag]);
+					```
+
+					And that's it for the `getWinSeqs` function.
+				</script></section>
+			</section>
+
+			<section>
+				<section data-markdown><script type="text/template">
+					## `TicTacToe#isWin`
+
+					This function returns the player that has won, and `null` if no player has won.
+
+					Make use of the function `getWinSeqs`. Now, a winning sequence consists of either:
+
+					* All cells marked with 'X'
+					* All cells marked with 'O'
+
+					That corresponds to the winning player.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Checking if all cells of an array are equal to an element
+
+					Use a `for` loop, and go through the first to second last element.
+
+					Now, if the first element is equal to `null`, we immediately know that this sequence does not give a win.
+
+					Otherwise, check the next element. If the first element is equal to the next element, we know that the first two cells are either marked with 'X' or 'O'.
+
+					Repeat these steps for the first to second last element, to determine which player won.
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## `TicTacToe#isWin`
+
+					Time to start coding.
+
+					---
+
+					This function returns `true` if a player has won, and `false` if no player has won.
+
+					Make use of the function `getWinSeqs`. Now, a winning sequence consists of either:
+
+					* All cells marked with 'X'
+					* All cells marked with 'O'
+
+					If there is a winning sequence, the game ends.
+				</script></section>
+			</section>
+
+			<section>
+				<section data-markdown><script type="text/template">
+					## `TicTacToe#isDraw`
+
+					This time round, you want to check that all the cells are filled up. This means that the game has ended, and it is either a draw or a win.
+
+					Finally, `return !isWin();` at the end, since if the game has been won, there is no draw.
 				</script></section>
 			</section>
 
