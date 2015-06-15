@@ -151,6 +151,24 @@
 					}, false);
 					```
 				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## Click listeners
+
+					```js
+					elem.addEventListener('click', function(event) {
+					  alert('Hi!');
+					}, false);
+					```
+					<button id="sayhi" style="font-size: 30px">Say Hi!</button>
+				</script></section>
+				<script>
+					window.onload = function() {
+						document.getElementById("sayhi").addEventListener('click', function(event) {
+							alert('Hi!');
+						}, false);
+					};
+				</script>
 			</section>
 
 			<section>
