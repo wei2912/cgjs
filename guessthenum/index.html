@@ -216,8 +216,6 @@
 					  statements;
 					} while (condition);
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="2"></span>
 
 					1. Execute `statements`.
 					2. If `condition` is truthy, return to step 1. Otherwise, end the loop.
@@ -234,10 +232,19 @@
 					  ++i;
 					} while (i <= noOfTimes);
 					```
-					<span class="fragment" data-code-focus="4"></span>
-					<span class="fragment" data-code-focus="5"></span>
-					<span class="fragment" data-code-focus="6"></span>
-					<span class="fragment" data-code-focus="4"></span>
+					<span class="fragment current-only" data-code-focus="2">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="4">Alert no. 1</span>
+					<span class="fragment current-only" data-code-focus="5">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="6">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="4">Alert no. 2</span>
+					<span class="fragment current-only" data-code-focus="5">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="6">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="4">Alert no. 3</span>
+					<span class="fragment current-only" data-code-focus="5">`i = 4`</span>
+					<span class="fragment current-only" data-code-focus="6">`i = 4`</span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -248,9 +255,6 @@
 					  statements;
 					}
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="2"></span>
-
 					1. Execute `init`.
 					2. If `condition` is truthy, proceed to step 3. Otherwise, end the loop.
 					3. Execute `statements`.
@@ -263,19 +267,23 @@
 
 					```js
 					for (
-					  var i = 1, noOfTimes = 10; // init
+					  var i = 1, noOfTimes = 3;  // init
 					  i <= noOfTimes;            // condition
 					  ++i                        // update
 					) {
 					  alert('Alert no. ' + i);
 					}
 					```
-					<span class="fragment" data-code-focus="2"></span>
-					<span class="fragment" data-code-focus="3"></span>
-					<span class="fragment" data-code-focus="6"></span>
-					<span class="fragment" data-code-focus="4"></span>
-					<span class="fragment" data-code-focus="3"></span>
-					<span class="fragment" data-code-focus="6"></span>
+					<span class="fragment current-only" data-code-focus="2">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="6">Alert no. 1</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="6">Alert no. 2</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="3">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="6">Alert no. 3</span>
+					<span class="fragment" data-code-focus="7"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -301,21 +309,29 @@
 					## `continue`
 
 					```js
-					// Alert from 0 up to 100 …
-					for (var i = 0; i < 100; ++i) {
-					  // … but don’t alert multiples of 13
-					  if (i % 13 == 0) {
-					    continue;
-					    // … skips to ++i, then i < 100, …
-					  } else {
-					    alert(i);
+					// Alert from 1 up to 4 …
+					for (var i = 1; i <= 4; ++i) {
+					  // … but don’t alert multiples of 2
+					  if (i % 2 == 0) {
+					    continue; // … skips to ++i, then i < 4, …
 					  }
+					  alert("Alert no. " + i);
 					}
 					```
-					<span class="fragment" data-code-focus="1-2"></span>
-					<span class="fragment" data-code-focus="3-6"></span>
-					<span class="fragment" data-code-focus="7-8"></span>
-					
+					<span class="fragment current-only" data-code-focus="2">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 1; 1 % 2 == 1`</span>
+					<span class="fragment current-only" data-code-focus="7">Alert no. 1</span>
+					<span class="fragment current-only" data-code-focus="2">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 2; 2 % 2 == 0`</span>
+					<span class="fragment current-only" data-code-focus="5"></span>
+					<span class="fragment current-only" data-code-focus="2">`i = 3`</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 3; 3 % 2 == 1`</span>
+					<span class="fragment current-only" data-code-focus="7">Alert no. 3</span>
+					<span class="fragment current-only" data-code-focus="2">`i = 4`</span>
+					<span class="fragment current-only" data-code-focus="4">`i = 4; 4 % 2 == 0`</span>
+					<span class="fragment current-only" data-code-focus="5"></span>
+					<span class="fragment current-only" data-code-focus="2">`i = 5`</span>
+					<span class="fragment current-only" data-code-focus="8"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -339,18 +355,24 @@
 					## `break`
 
 					```js
-					// Alert from 0 up to 100 …
-					for (var i = 0; i < 100; ++i) {
-					  alert(i);
+					// Alert from 1 up to 4 …
+					for (var i = 1; i < 4; ++i) {
+					  alert("Alert no. " + i);
 					  // … but end at the first multiple
-					  // of 13 encountered
-					  if (i % 13 == 0) {
+					  // of 2 encountered
+					  if (i % 2 == 0) {
 					    break;
 					  }
 					}
 					```
-					<span class="fragment" data-code-focus="1-3"></span>
-					<span class="fragment" data-code-focus="4-8"></span>
+					<span class="fragment current-only" data-code-focus="2">`i = 1`</span>
+					<span class="fragment current-only" data-code-focus="3">Alert no. 1</span>
+					<span class="fragment current-only" data-code-focus="6">`i = 1; 1 % 2 == 1`</span>
+					<span class="fragment current-only" data-code-focus="2">`i = 2`</span>
+					<span class="fragment current-only" data-code-focus="3">Alert no. 2</span>
+					<span class="fragment current-only" data-code-focus="6">`i = 2; 2 % 2 == 0`</span>
+					<span class="fragment current-only" data-code-focus="7"></span>
+					<span class="fragment current-only" data-code-focus="9"></span>
 				</script></section>
 			</section>
 
@@ -363,7 +385,7 @@
 					## Objects
 
 					 * Storage containers
-					 * Keys -> Values
+					 * Keys → Values
 					 * Can contain anything
 				</script></section>
 
@@ -411,6 +433,8 @@
 
 					object == object; // true
 					```
+					<span class="fragment" data-code-focus="3"></span>
+					<span class="fragment" data-code-focus="5"></span>
 				</script></section>
 			</section>
 
@@ -425,7 +449,7 @@
 					 * Objects
 					 * Contain pieces of code
 					 * Make it easier to program
-					 * Best Practice: 1 per action
+					 * Best practice: 1 per action
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -437,9 +461,11 @@
 					  alert('Hi ' + name + '!');
 					}
 
-					sayHi('Benjamin');
+					sayHi('Benjamin'); // 'Hi Benjamin!'
 					```
 					<span class="fragment" data-code-focus="1-4"></span>
+					<span class="fragment" data-code-focus="6"></span>
+
 					**Important:** Function declarations **cannot** be used reliably in branches/loops.
 				</script></section>
 
@@ -452,9 +478,11 @@
 					  alert('Hi ' + name + '!');
 					};
 
-					sayHi('Jared');
+					sayHi('Jared'); // 'Hi Jared!'
 					```
 					<span class="fragment" data-code-focus="1-4"></span>
+					<span class="fragment" data-code-focus="6"></span>
+
 					Function expressions **can** be used reliably in branches/loops.
 				</script></section>
 
@@ -470,13 +498,13 @@
 					test(); // 'Benjamin'
 					console.log(name); // 'name'
 					```
-					<span class="fragment" data-code-focus="1"></span>
-					<span class="fragment" data-code-focus="6"></span>
-					<span class="fragment" data-code-focus="2"></span>
-					<span class="fragment" data-code-focus="3"></span>
-					<span class="fragment" data-code-focus="4"></span>
-					<span class="fragment" data-code-focus="5"></span>
-					<span class="fragment" data-code-focus="7"></span>
+					<span class="fragment current-only" data-code-focus="1">`name = 'name'`</span>
+					<span class="fragment current-only" data-code-focus="6">`name = 'name'`</span>
+					<span class="fragment current-only" data-code-focus="2"></span>
+					<span class="fragment current-only" data-code-focus="3">`name = 'Benjamin'`</span>
+					<span class="fragment current-only" data-code-focus="4">`name = 'Benjamin'`</span>
+					<span class="fragment current-only" data-code-focus="5"></span>
+					<span class="fragment current-only" data-code-focus="7">`name = 'name'`</span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
@@ -540,12 +568,12 @@
 
 					We have created our own version of the game (the source code is obfuscated).
 
-					[git.io/vvv2n](http://git.io/vvv2n)
+					[git.io/vLUCA](http://git.io/vLUCA)
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					## Logic
-					
+
 					1. Generate number in range $[1, 100]$.
 					2. Prompt user for a guess.
 						1. If number is less than guess, tell the user that.
@@ -555,68 +583,70 @@
 					4. Congratulate the user for getting it correct.
 				</script></section>
 			</section>
-			
+
 			<section>
 				<section data-markdown><script type="text/template">
 					# Step 1.
+
 					## Generate number in range $[1, 100]$.
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					## `Math.random()`
+
 					RTFM!
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					`Math.random()` returns a random number in the range $[0, 1)$.
-					
+
 					How do we modify the number generated to get a range $[1, 100]$?
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					`Math.random() * 100` generates a random number in the range $[0, 100)$.
 					`Math.random() * 100 + 1` generates a random number in the range $[1, 100)$.
-					
+
 					We need to do something to trim the range and make our number an integer.
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					## Floor
-					
+
 					$\lfloor x \rfloor$
 					Returns the largest integer smaller than $x$.
-					
+
 					$\lfloor 4.9 \rfloor = 4$
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
 					## Ceiling
-					
+
 					$\lceil x \rceil$
 					Returns the smallest integer larger than $x$.
-					
+
 					$\lceil 5.3 \rceil = 6$
 				</script></section>
-				
+
 				<section data-markdown><script type="text/template">
-					## Now... put these together.
-					
+					## Now… put these together.
+
 					How would you generate a random integer in the range $[1, 100]$?
 				</script></section>
 			</section>
-			
+
 			<section>
 				<section data-markdown><script type="text/template">
 					# Step 2-3.
 					## Compare number with our guesses.
 				</script></section>
 				<section data-markdown><script type="text/template">
-					We can make use of `prompt()`, a `while` loop, an `if..else` clause and the `break` statement to do this.
+					We can make use of `prompt()`, a `while` loop, an `if…else` clause and the `break` statement to do this.
 
 					Read the docs on how to use `prompt()`!
 				</script></section>
 			</section>
-			
+
 			<section>
 				<section data-markdown><script type="text/template">
 					# Step 4.
@@ -629,9 +659,9 @@
 			<section data-markdown><script type="text/template">
 				## Exercises
 
-				This week's exercises should be fun.
+				This week’s exercises should be fun.
 
-				[git.io/vk6FI](http://git.io/vk6FI)
+				[git.io/vLUlp](http://git.io/vLUlp)
 			</script></section>
 		</div>
 		</div>
