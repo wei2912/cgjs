@@ -32,20 +32,12 @@
 				Benjamin Tan | Ng Wei En
 			</section>
 
-			<section>
-				<section data-markdown><script type="text/template">
-					# Previously...
+			<section data-markdown><script type="text/template">
+				# Previously…
 
-					 * HTML (L1)
-					 * CSS (L2)
-				</script></section>
-
-				<section data-markdown>
-					## CSS
-
-					https://developer.mozilla.org/en-US/docs/Web/Guide/CSS/Getting_Started up till chapter 6
-				</section>
-			</section>			
+				 * HTML
+				 * CSS
+			</script></section>
 
 			<section>
 				<section data-markdown>
@@ -55,8 +47,7 @@
 				<section data-markdown>
 					## What is the DOM?
 
-					Document Object Model
-
+					 * Document Object Model
 					 * Representation of the HTML tree in JavaScript
 				</section>				
 
@@ -64,32 +55,44 @@
 					## Selecting elements
 
 					```js
-					document.getElementById('super'); // Element
-					document.getElementByClassName('special'); // Another element
-					document.getElementByTagName('div'); // Array-like object of elements
+					document.getElementById('super');
+					// Element with `id="super"`
+					document.getElementsByClassName('special');
+					// Array-like object of elements with `class="special"`
+					document.getElementByTagName('div');
+					// Array-like object of `<div>` elements
 					```
+					<span class="fragment" data-code-focus="1-2"></span>
+					<span class="fragment" data-code-focus="3-4"></span>
+					<span class="fragment" data-code-focus="5-6"></span>
 				</script></section>
 
 				<section data-markdown><script type="text/template">
 					## Selecting elements with CSS selectors
 
 					```js
-					document.querySelector('#super'); // Element with ID of "super"
-					document.querySelector('.special'); // Array of elements with class of "special"
-					document.querySelector('div p'); // Array of `p` elements with `div` ancestor
+					document.querySelector('#super');
+					// Element with `id="super"`
+					document.querySelectorAll('.special');
+					// Array-like object of elements with `class="special"`
+					document.querySelectorAll('div p');
+					// Array-like object of `<p>` elements with a `<div>` ancestor
 					```
+					<span class="fragment" data-code-focus="1-2"></span>
+					<span class="fragment" data-code-focus="3-4"></span>
+					<span class="fragment" data-code-focus="5-6"></span>
 				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Creating elements
 
 					```js
 					var divElem = document.createElement('div');
-					var scriptElem = document.createElement;
+					var scriptElem = document.createElement('script');
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Modifying attributes
 
 					```js
@@ -103,9 +106,9 @@
 					divElem.setAttribute('class', 'special shiny');
 					scriptElem.setAttribute('src', '/path/to/file.js');
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `classList`
 
 					```js
@@ -113,9 +116,9 @@
 					divElem.classList.remove('useless-class');
 					divElem.classList.toggle('visible');
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## `innerHTML`
 
 					```js
@@ -123,9 +126,9 @@
 					  ' a useless <a href="http://google.com/">link</a>.';
 					```
 
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Inserting elements
 
 					```js
@@ -137,9 +140,9 @@
 					var firstDiv = document.querySelector('div');
 					firstDiv.parentNode.insertBefore(divElem, firstDiv);
 					```
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## Event listeners
 
 					```js
@@ -147,19 +150,19 @@
 					  // ...
 					}, false);
 					```
-				</section>
+				</script></section>
 			</section>
 
 			<section>
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					# Tic-Tac-Toe
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## User Interface
-				</section>
+				</script></section>
 
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					## API — Functions
 
 					```js
@@ -172,13 +175,13 @@
 					ui.gameOver
 					ui.render
 					```
-				</section>
+				</script></section>
 			</section>
 
 			<section>
-				<section data-markdown>
+				<section data-markdown><script type="text/template">
 					# Fin.
-				</section>
+				</script></section>
 			</section>
 		</div>
 		</div>
