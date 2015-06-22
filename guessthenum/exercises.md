@@ -1,25 +1,45 @@
 # Lesson 2: Guess the Number: Exercises
 
-This week, there are a couple of coding exercises. You are only required to do just *one* exercise.
+This week, there are a couple of coding exercises. You are required to do *all* of the exercises.
 
-## Multiples of 3 and 5
+## 1. Printing Shapes
 
-Adapted from [Project Euler: Problem 1](https://projecteuler.net/problem=1).
+Adapted from “Think Like a Programmer”, pg 54, exercise 2-2.
 
-If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
+With the use of only:
 
-Write a function, `problem1(n)`, that returns the sum of all the multiples of 3 or 5 below an integer `n`.
+1. A statement that outputs a single hash mark to the console
+2. A statement that outputs a newline (a newline creates a new line)
+
+write a program that produces the following shape:
+
+```
+########
+ ######
+  ####
+   ##
+```
 
 ### Tips
 
-When solving problems such as these, you will want to reduce the problem into a series of subproblems that can be easily solved. In this case, you have these two subproblems:
+Observe a pattern in:
 
-1. Divisiblity checks (i.e. is a number a multiple of `k`)
-2. Iterate through all numbers below `n`.
+1. The number of hash characters
+2. The number of spaces added to the front of each line
 
-These two are trivial.
+You should be able to form a table of values:
 
-## Even Fibonacci Numbers
+| Line No. | No. of hashes | No. of spaces at the front |
+| -------- | ------------- | -------------------------- |
+| 1        | 8             | 0                          |
+| 2        | 6             | 1                          |
+| 3        | 4             | 2                          |
+| 4        | 2             | 3                          |
+
+and decipher the pattern.
+
+
+## 2. Even Fibonacci Numbers
 
 Adapted from [Project Euler: Problem 2](https://projecteuler.net/problem=2).
 
@@ -39,27 +59,7 @@ Try rewriting each number of the Fibonacci sequence as the sum of the previous t
 
 This should give you an idea as to how to generate the Fibonacci numbers.
 
-## Sum Square Difference
-
-Adapted from [Project Euler: Problem 6](https://projecteuler.net/problem=6).
-
-The sum of the squares of the first ten natural numbers is:
-
-    1^2 + 2^2 + ... + 10^2 = 385
-
-The square of the sum of the first ten natural numbers is:
-
-    (1 + 2 + ... + 10)^2 = 55^2 = 3025
-
-Hence the difference between the sum of the squares of the first ten natural numbers and the square of the sum is `3025 − 385 = 2640`.
-
-Write a function, `problem3(n)`, that finds the difference between the sum of the squares of the first `n` natural numbers and the square of the sum.
-
-### Tips
-
-This problem is easy.
-
-## Balanced Brackets
+## 3. Balanced Brackets
 
 Adapted from [Rosetta Code: Balanced brackets](http://rosettacode.org/wiki/Balanced_brackets).
 
@@ -96,39 +96,3 @@ To solve this problem, observe the pattern of a balanced string. A balanced stri
 2. At the end, there should be an equal number of opening and closing brackets.
 
 Think of why this is the case, and use these properties to solve the problem.
-
-## Printing Shapes
-
-Adapted from “Think Like a Programmer”, pg 54, exercise 2-2.
-
-With the use of only:
-
-1. A statement that outputs a single hash mark to the console
-2. A statement that outputs a newline (a newline creates a new line)
-
-write a program that produces the following shape:
-
-```
-########
- ######
-  ####
-   ##
-```
-
-### Tips
-
-Observe a pattern in:
-
-1. The number of hash characters
-2. The number of spaces added to the front of each line
-
-You should be able to form a table of values:
-
-| Line No. | No. of hashes | No. of spaces at the front |
-| -------- | ------------- | -------------------------- |
-| 1        | 8             | 0                          |
-| 2        | 6             | 1                          |
-| 3        | 4             | 2                          |
-| 4        | 2             | 3                          |
-
-and decipher the pattern.
