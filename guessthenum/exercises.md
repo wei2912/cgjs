@@ -2,6 +2,8 @@
 
 This week, there are a couple of coding exercises. You are required to do *all* of the exercises.
 
+Submit your exercises to us through email, to either of us.
+
 ## 1. Multiples of 3 and 5
 
 Adapted from [Project Euler: Problem 1](https://projecteuler.net/problem=1).
