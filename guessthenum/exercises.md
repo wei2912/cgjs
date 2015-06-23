@@ -2,42 +2,20 @@
 
 This week, there are a couple of coding exercises. You are required to do *all* of the exercises.
 
-## 1. Printing Shapes
+## 1. Multiples of 3 and 5
 
-Adapted from “Think Like a Programmer”, pg 54, exercise 2-2.
+Adapted from [Project Euler: Problem 1](https://projecteuler.net/problem=1).
 
-With the use of only:
+If we list all the natural numbers below 10 that are multiples of 3 or 5, we get 3, 5, 6 and 9. The sum of these multiples is 23.
 
-1. A statement that outputs a single hash mark to the console
-2. A statement that outputs a newline (a newline creates a new line)
-
-write a program that produces the following shape:
-
-```
-########
- ######
-  ####
-   ##
-```
+Write a function, `problem1(n)`, that returns the sum of all the multiples of 3 or 5 below an integer `n`.
 
 ### Tips
 
-Observe a pattern in:
+When solving problems such as these, you will want to reduce the problem into a series of subproblems that can be easily solved. In this case, you have these two subproblems:
 
-1. The number of hash characters
-2. The number of spaces added to the front of each line
-
-You should be able to form a table of values:
-
-| Line No. | No. of hashes | No. of spaces at the front |
-| -------- | ------------- | -------------------------- |
-| 1        | 8             | 0                          |
-| 2        | 6             | 1                          |
-| 3        | 4             | 2                          |
-| 4        | 2             | 3                          |
-
-and decipher the pattern.
-
+1. Divisiblity checks (i.e. is a number a multiple of `k`)
+2. Iterate through all numbers below `n`.
 
 ## 2. Even Fibonacci Numbers
 
@@ -87,8 +65,6 @@ function problem3(cs) {
 This will allow you to go through each character in the string.
 
 ### Tips
-
-As you may have seen from the template given, you will only need a single for loop.
 
 To solve this problem, observe the pattern of a balanced string. A balanced string has two properties:
 
