@@ -1,8 +1,0 @@
-Snake API
-===
-
-Snake(n); // Object constructor. Takes in n, size of square grid.
-grid; // grid of stuff. null is nothing, 'X' is snake body, 'O' is food.
-snake; // a FIFO queue of locations of the snake body. upon every step, pop from end, push to front.
-score; // the current score
-step(direction); // Moves the snake forward in the direction. Checks if food is eaten, the snake eats itself or hits the wall. Returns false if the snake dies, otherwise returns true.
