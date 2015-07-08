@@ -181,18 +181,34 @@
 				</script></section>
 
 				<section data-markdown><script type="text/template">
-					## API — Functions
+					## API
 
 					```js
-					ui.start
-					ui.initElems
-					ui.initStatusElem
-					ui.createGrid
-					ui.onCellSelected
-					ui.setStatus
-					ui.gameOver
-					ui.render
+					ui.defaultPlayer      // Default player.
+
+					ui.start()            // Starts the game.
+					ui.initElems()        // Initializes the elements used.
+					ui.createGrid()       // Creates the Tic-Tac-Toe grid.
+
+					ui.addListener(cb) // Adds click listeners to each cell.
+					ui.onCellSelected(i) // Called when a cell is clicked on.
+
+					ui.setStatus()        // Sets a status message.
+					ui.gameOver()         // Creates message saying that the game is over.
+					ui.render()           // Renders the current moves on the board.
+
+					$()                   // Selects elements based on their CSS selector.
 					```
+				</script></section>
+
+				<section data-markdown><script type="text/template">
+					## `ui.start()`
+
+					1. Initialize the elements used:  `ui.initElems()`
+					2. Create a new game: `ui.game = new TicTacToe()`
+					3. Create Tic-Tac-Toe grid: `ui.createGrid();`
+					4. Set status message: `ui.setStatus(msg)`
+					5. Add callback when a cell is selected: `ui.addListener(ui.onCellSelected)`
 				</script></section>
 			</section>
 
