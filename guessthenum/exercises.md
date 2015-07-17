@@ -1,8 +1,12 @@
-# Lesson 2: Guess the Number: Exercises
+# Lesson 2 & 3: Guess the Number: Exercises
 
 This week, there are a couple of coding exercises. You are required to do *all* of the exercises.
 
-Submit your exercises to us through email, to either of us.
+Submit your exercises to us through email, to either of us. Our contacts are available on the website.
+
+The dateline is by lesson 4, or 30/7/15.
+
+**NOTICE: PLEASE DISCUSS THE PROBLEMS WITH YOUR CLASSMATES, BUT DO NOT SHARE CODE!**
 
 ## 1. Multiples of 3 and 5
 
