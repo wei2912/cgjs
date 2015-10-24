@@ -48,10 +48,11 @@
 
     /* Intro Section */
     .jumbotron { margin-bottom: 0; background-image: radial-gradient(rgb(100, 100, 100) 0, black 100%); }
-    h1 { padding: 30px 0; }
+    h1 { padding: 30px 0 0; margin-bottom: 0; }
     h1 span { display: block; }
     #cg { color: #ea9999; }
     #js { color: #fbde2d; font-family: Consolas, Courier New, Courier, monospace; font-size: 80%; }
+    #link { display: inline-block; font-family: Consolas, Courier New, Courier, monospace; margin-bottom: 30px; font-size: 1em; width: 100%; text-align: left; }
     #js::before { content: '// '; }
     #intro a, #intro a:hover, #intro a:active { color: inherit; text-decoration: none; display: inline-block; border-bottom: 1px solid white; -webkit-transition: border-bottom-color 0.3s; transition: border-bottom-color 0.3s; }
     #intro a:hover, #intro a:active { border-bottom-color: transparent; }
@@ -69,6 +70,7 @@
 
     /* Larger displays */
     @media (min-width: 768px) {
+      #link { text-align: center; }
       a { transition: text-decoration 0.5s; }
       #js { font-size: 50%; }
       .container-full { padding: 50px 0; }
@@ -117,7 +119,7 @@
               <span id="cg">Creating Games</span>
               <span id="js">with JavaScript</span>
             </h1>
-            <p><a href="http://git.io/cgjs-15">git.io/cgjs-15</a></p>
+            <span id="link"><a href="http://git.io/cgjs-15">git.io/cgjs-15</a></span>
           </div>
         </div>
         <div class="row text-center">
